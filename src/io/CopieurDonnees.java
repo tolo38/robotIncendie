@@ -5,6 +5,9 @@ import general.Incendie;
 import general.NatureTerrain;
 import general.robots.Drone;
 import general.DonneesSimulation;
+import general.robots.RobotChenilles;
+import general.robots.RobotPattes;
+import general.robots.RobotRoues;
 import java.io.*;
 import java.util.*;
 import java.util.zip.DataFormatException;
@@ -208,17 +211,42 @@ public class CopieurDonnees {
             String s = scanner.findInLine("(\\d+)");	// 1 or more digit(s) ?
             // pour lire un flottant:    ("(\\d+(\\.\\d+)?)");
 
+            double vitesse = 0;
             if (s == null) {
                 System.out.print("valeur par defaut");
             } else {
-                int vitesse = Integer.parseInt(s);
+                vitesse = Double.parseDouble(s);
                 System.out.print(vitesse);
             }
             verifieLigneTerminee();
 
             System.out.println();
-            
-            dataGame.getRobots().add(new Drone(dataGame.getCarte().getCase(lig, col), 100, 30 * 60));
+            switch (type) {
+                case "DRONE" :
+                    if (vitesse != 0) {
+                        dataGame.getRobots().add(new Drone(dataGame.getCarte().getCase(lig, col), 100, 30 * 60, vitesse));
+                    } else {
+                        dataGame.getRobots().add(new Drone(dataGame.getCarte().getCase(lig, col), 100, 30 * 60));
+                    }
+                    break;
+                case "ROUES" :
+                    if (vitesse != 0) {
+                        dataGame.getRobots().add(new RobotRoues(dataGame.getCarte().getCase(lig, col), vitesse));
+                    } else {
+                        dataGame.getRobots().add(new RobotRoues(dataGame.getCarte().getCase(lig, col)));
+                    }
+                    break;
+                case "PATTES" :
+                    dataGame.getRobots().add(new RobotPattes(dataGame.getCarte().getCase(lig, col)));
+                    break;
+                case "CHENILLES" :
+                    if (vitesse != 0) {
+                        dataGame.getRobots().add(new RobotChenilles(dataGame.getCarte().getCase(lig, col), vitesse));
+                    } else {
+                        dataGame.getRobots().add(new RobotChenilles(dataGame.getCarte().getCase(lig, col)));
+                    }
+                    break;
+            }
 
         } catch (NoSuchElementException e) {
             throw new DataFormatException("format de robot invalide. "

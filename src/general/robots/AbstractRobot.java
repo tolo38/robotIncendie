@@ -14,12 +14,20 @@ public abstract class AbstractRobot {
     private double vitesse;     // en km/h
     private int tailleReservoir;
     private int currentReservoir;
-    private int qteDeversee;    // en 1 seconde
+    private double qteDeversee;    // en 1 seconde
                                 // à mettre à jour pr les drones
-    private double tempsRemplissage;
+    private long tempsRemplissage;
 
-    public AbstractRobot(Case position, int tailleReservoir, double vitesse, int
-            qteDeversee, int tempsRemplissage) {
+    /**
+     *
+     * @param position
+     * @param tailleReservoir
+     * @param vitesse
+     * @param qteDeversee
+     * @param tempsRemplissage
+     */
+    public AbstractRobot(Case position, int tailleReservoir, double vitesse, double
+            qteDeversee, long tempsRemplissage) {
         this.position = position;
         this.tailleReservoir = tailleReservoir;
         this.vitesse = vitesse;
@@ -29,6 +37,10 @@ public abstract class AbstractRobot {
     
     public Case getPosition() {
         return this.position;
+    }
+    
+    public double getVitesse() {
+        return this.vitesse;
     }
     
     public void setPosition(Case position) {
@@ -43,9 +55,6 @@ public abstract class AbstractRobot {
         this.currentReservoir = currentReservoir;
     }
     
-    
-    
-    // à override ds les sous classes
     public double getVitesse(NatureTerrain nature) {
         return this.vitesse;
     }
@@ -59,5 +68,7 @@ public abstract class AbstractRobot {
     
     abstract public void remplirReservoir() throws WrongPositionException;
     
-    abstract public void seDeplacer(Direction direction) throws ForbiddenMoveException;
+    abstract public String getType();
+    
+    // abstract public void seDeplacer(Direction direction) throws ForbiddenMoveException;
 }

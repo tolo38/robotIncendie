@@ -16,8 +16,18 @@ public class Drone extends AbstractRobot {
     
     private static double vitesseDrone = 100;
 
-    public Drone(Case position, int qteDeversee, int tempsRemplissage) {
+    /**
+     * tailleReservoir = 10000L
+     * @param position
+     * @param qteDeversee
+     * @param tempsRemplissage
+     */
+    public Drone(Case position, double qteDeversee, long tempsRemplissage) {
         super(position, 10000, vitesseDrone, qteDeversee, tempsRemplissage);
+    }
+    
+    public Drone(Case position, double qteDeversee, long tempsRemplissage, double vitesse) {
+        super(position, 10000, vitesse, qteDeversee, tempsRemplissage);
     }
     
     /**
@@ -32,17 +42,8 @@ public class Drone extends AbstractRobot {
         this.setCurrentReservoir(this.getTailleReservoir());
     }
     
-   /* @Override
-    public void seDeplacer(Direction direction) throws ForbiddenMoveException {
-        if (deplacement interdit) {
-            throw new ForbiddenMoveException(this.getPosition(), direction);
-        }
-        this.setPosition(this.getPosition().getVoisin(direction));
-    }*/
-
-    @Override
-    public void seDeplacer(Direction direction) throws ForbiddenMoveException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String getType() {
+        return "DRONE";
     }
     
 }

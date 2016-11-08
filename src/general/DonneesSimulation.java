@@ -3,16 +3,16 @@ package general;
 import general.evenements.DeplacerRobot;
 import general.evenements.Evenement;
 import general.robots.AbstractRobot;
+import general.robots.Drone;
+import general.robots.RobotChenilles;
+import general.robots.RobotPattes;
+import general.robots.RobotRoues;
 import io.CopieurDonnees;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.zip.DataFormatException;
-import jdk.nashorn.internal.ir.Terminal;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 import gui.GUISimulator;
 import gui.Oval;
@@ -142,9 +142,24 @@ public class DonneesSimulation implements Simulable {
         
         // affichage des robots
         for (AbstractRobot robot : this.robots) {
-            // System.out.println(robot.getTailleReservoir());
-            gui.addGraphicalElement(new Oval(robot.getPosition().getColonne() * 50
-                    + 35, robot.getPosition().getLigne() * 50 + 25, Color.MAGENTA, Color.MAGENTA, 20));
+            switch (robot.getType()) {
+                case "DRONE" :
+                    gui.addGraphicalElement(new Oval(robot.getPosition().getColonne() * 50
+                    + 35, robot.getPosition().getLigne() * 50 + 25, Color.BLUE, Color.MAGENTA, 20));
+                    break;
+                case "ROUES" :
+                    gui.addGraphicalElement(new Oval(robot.getPosition().getColonne() * 50
+                    + 35, robot.getPosition().getLigne() * 50 + 25, Color.WHITE, Color.MAGENTA, 20));
+                    break;
+                case "PATTES" :
+                    gui.addGraphicalElement(new Oval(robot.getPosition().getColonne() * 50
+                    + 35, robot.getPosition().getLigne() * 50 + 25, Color.BLACK, Color.MAGENTA, 20));
+                    break;
+                case "CHENILLES" :
+                    gui.addGraphicalElement(new Oval(robot.getPosition().getColonne() * 50
+                    + 35, robot.getPosition().getLigne() * 50 + 25, Color.GREEN, Color.MAGENTA, 20));
+                    break;
+            }
         }        
     }
     
