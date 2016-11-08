@@ -38,19 +38,17 @@ public class DonneesSimulation implements Simulable {
         this.simulateur = new Simulateur();
         this.getData("cartes/carteSujet.map");
         
-        // bourrins pour tester
-        this.simulateur.addEvenement(new RemplirReservoir(2, this, this.robots.get(0)));
-        this.simulateur.addEvenement(new DeplacerRobot(1, this, this.robots.get(0), Direction.NORD));
-        this.simulateur.addEvenement(new DeplacerRobot(2, this, this.robots.get(0), Direction.NORD));
-        this.simulateur.addEvenement(new DeplacerRobot(3, this, this.robots.get(0), Direction.NORD));
-        this.simulateur.addEvenement(new DeplacerRobot(1, this, this.robots.get(0), Direction.NORD));
-        
+               
         // pour la genericite
         UtileRobot.setDataGame(this);
         
         this.draw();
     }
 
+    public void addEvenement(Evenement e) {
+        this.simulateur.addEvenement(e);
+    }
+    
     public ArrayList<AbstractRobot> getRobots() {
         return robots;
     }
