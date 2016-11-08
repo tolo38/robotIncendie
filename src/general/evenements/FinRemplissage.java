@@ -11,8 +11,8 @@ import general.robots.AbstractRobot;
 public class FinRemplissage extends Evenement {
     private AbstractRobot robot;
 
-    public FinRemplissage(long date, DonneesSimulation dataGame, AbstractRobot robot) {
-        super(date, dataGame);
+    public FinRemplissage(long date, AbstractRobot robot) {
+        super(date);
         this.robot = robot;
     }
 

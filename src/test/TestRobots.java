@@ -21,10 +21,10 @@ public class TestRobots {
         GUISimulator gui = new GUISimulator(1000, 1000, Color.BLACK);
         DonneesSimulation donneesSimulation = new DonneesSimulation(gui);
         // bourrins pour tester
-        donneesSimulation.addEvenement(new RemplirReservoir(2, donneesSimulation, donneesSimulation.getRobots().get(0)));
-        donneesSimulation.addEvenement(new DeplacerRobot(1, donneesSimulation, donneesSimulation.getRobots().get(0), Direction.NORD));
-        donneesSimulation.addEvenement(new DeplacerRobot(2, donneesSimulation, donneesSimulation.getRobots().get(0), Direction.NORD));
-        donneesSimulation.addEvenement(new DeplacerRobot(3, donneesSimulation, donneesSimulation.getRobots().get(0), Direction.NORD));
-        donneesSimulation.addEvenement(new DeplacerRobot(1, donneesSimulation, donneesSimulation.getRobots().get(0), Direction.NORD));
+        donneesSimulation.addEvenement(new RemplirReservoir(2, donneesSimulation.getRobots().get(0)));
+        donneesSimulation.addEvenement(new DeplacerRobot(1, donneesSimulation.getRobots().get(0), Direction.NORD));
+        donneesSimulation.addEvenement(new DeplacerRobot(2, donneesSimulation.getRobots().get(0), Direction.NORD));
+        donneesSimulation.addEvenement(new DeplacerRobot(3, donneesSimulation.getRobots().get(0), Direction.NORD));
+        donneesSimulation.addEvenement(new DeplacerRobot(1, donneesSimulation.getRobots().get(0), Direction.NORD));
     }
 }

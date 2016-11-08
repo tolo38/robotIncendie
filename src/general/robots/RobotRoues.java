@@ -1,8 +1,10 @@
 
 package general.robots;
 
+import exceptions.ForbiddenMoveException;
 import exceptions.WrongPositionException;
 import general.Case;
+import general.Direction;
 import general.NatureTerrain;
 
 /**
@@ -38,6 +40,18 @@ public class RobotRoues extends AbstractRobot {
     
     public String getType() {
         return "ROUES";
+    }
+
+    @Override
+    public void deplacerRobot(Direction direction) {
+        try {
+            Case caseSuivante = UtileRobot.caseSuivante(this.getPosition(), direction);
+            if (caseSuivante.getNature() != NatureTerrain.TERRAIN_LIBRE && caseSuivante.getNature() != NatureTerrain.HABITAT)
+                throw new ForbiddenMoveException(getPosition(), direction);
+            this.setPosition(caseSuivante);
+        } catch (ForbiddenMoveException ex) {
+            System.out.println("Forbidden move : " + this + "\nLocation: " + this.getPosition() + " can't move " + direction);
+        }
     }
     
 }

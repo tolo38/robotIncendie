@@ -81,6 +81,6 @@ public abstract class AbstractRobot {
     public String toString() {
         return "Robot " + this.getType() + " positionné en " + this.getPosition().toString();
     }
-    
-    // abstract public void seDeplacer(Direction direction) throws ForbiddenMoveException;
+
+    abstract public void deplacerRobot(Direction direction);
 }

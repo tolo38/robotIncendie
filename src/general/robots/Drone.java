@@ -7,6 +7,8 @@ import exceptions.WrongPositionException;
 import general.Case;
 import general.Direction;
 import general.NatureTerrain;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -41,6 +43,16 @@ public class Drone extends AbstractRobot {
     
     public String getType() {
         return "DRONE";
+    }
+
+    @Override
+    public void deplacerRobot(Direction direction) {
+        try {
+            Case caseSuivante = UtileRobot.caseSuivante(this.getPosition(), direction);
+            this.setPosition(caseSuivante);
+        } catch (ForbiddenMoveException ex) {
+            System.out.println("Forbidden move : " + this + "\nLocation: " + this.getPosition() + "can't move " + direction);
+        }
     }
     
 }

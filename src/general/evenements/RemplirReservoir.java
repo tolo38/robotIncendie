@@ -18,8 +18,8 @@ import java.util.logging.Logger;
 public class RemplirReservoir extends Evenement {
     private AbstractRobot robot;
 
-    public RemplirReservoir(long date, DonneesSimulation dataGame, AbstractRobot robot) {
-        super(date, dataGame);
+    public RemplirReservoir(long date, AbstractRobot robot) {
+        super(date);
         this.robot = robot;
     }
 
@@ -27,7 +27,8 @@ public class RemplirReservoir extends Evenement {
     public void execute() {
         try {
             robot.remplirReservoir();
-            getDataGame().addEvenement(new FinRemplissage(getDate() + robot.getTempsRemplissage(), getDataGame(), robot));
+            // TODO gestion d'event, fin remplissage
+            // getDataGame().addEvenement(new FinRemplissage(getDate() + robot.getTempsRemplissage(), getDataGame(), robot));
         } catch (WrongPositionException ex) {
             System.out.println("on ne peut pas remplir un " + robot.getType() + " ici" );
         }

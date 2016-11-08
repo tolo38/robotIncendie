@@ -14,7 +14,11 @@ public class ForbiddenMoveException extends Exception {
     private Direction direction;
     //private AbstractRobot robot;
     
-
+    /**
+     *
+     * @param position
+     * @param direction
+     */
     public ForbiddenMoveException(Case position, Direction direction) {
         this.position = position;
         this.direction = direction;

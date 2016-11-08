@@ -13,6 +13,10 @@ import general.NatureTerrain;
  */
 public class UtileRobot {
     private static DonneesSimulation dataGame;
+
+    static Case caseSuivante(Case position, Direction direction) throws ForbiddenMoveException {
+        return dataGame.getCarte().getVoisin(position, direction);
+    }
     
     private UtileRobot() {
         

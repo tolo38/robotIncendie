@@ -11,8 +11,8 @@ import general.robots.AbstractRobot;
 public class robotArrive extends Evenement {
     private AbstractRobot robot;
 
-    public robotArrive(long date, DonneesSimulation dataGame, AbstractRobot robot) {
-        super(date, dataGame);
+    public robotArrive(long date, AbstractRobot robot) {
+        super(date);
         this.robot = robot;
     }
     
