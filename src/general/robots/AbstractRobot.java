@@ -52,6 +52,10 @@ public abstract class AbstractRobot {
         return this.tailleReservoir;
     }
 
+    public long getTempsRemplissage() {
+        return tempsRemplissage;
+    }
+
     public void setCurrentReservoir(int currentReservoir) {
         this.currentReservoir = currentReservoir;
     }

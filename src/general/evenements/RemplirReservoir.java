@@ -26,7 +26,8 @@ public class RemplirReservoir extends Evenement {
     @Override
     public void execute() {
         try {
-            this.robot.remplirReservoir();
+            robot.remplirReservoir();
+            getDataGame().addEvenement(new FinRemplissage(getDate() + robot.getTempsRemplissage(), getDataGame(), robot));
         } catch (WrongPositionException ex) {
             System.out.println("on ne peut pas remplir un " + robot.getType() + " ici" );
         }
