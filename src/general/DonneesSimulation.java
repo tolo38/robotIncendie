@@ -7,6 +7,7 @@ import general.robots.Drone;
 import general.robots.RobotChenilles;
 import general.robots.RobotPattes;
 import general.robots.RobotRoues;
+import general.robots.UtileRobot;
 import io.CopieurDonnees;
 import java.io.FileNotFoundException;
 import java.util.zip.DataFormatException;
@@ -42,6 +43,9 @@ public class DonneesSimulation implements Simulable {
         this.simulateur.addEvenement(new DeplacerRobot(3, this, this.robots.get(0), Direction.NORD));
         this.simulateur.addEvenement(new DeplacerRobot(1, this, this.robots.get(0), Direction.NORD));
         
+        // pour la genericite
+        UtileRobot.setDataGame(this);
+        
         this.draw();
     }
 
@@ -56,7 +60,10 @@ public class DonneesSimulation implements Simulable {
     public Carte getCarte() {
         return carte;
     }
-    
+
+    public Simulateur getSimulateur() {
+        return simulateur;
+    }
     
     public void createCarte(int nbLignes, int nbColonnes, int tailleC){
         carte = new Carte(nbLignes, nbColonnes, tailleC);
@@ -65,9 +72,6 @@ public class DonneesSimulation implements Simulable {
     public void setNatureTerrain(int ligne, int colonne, NatureTerrain terrain) {
         carte.getCase(ligne, colonne).setNatureTerrain(terrain);
     }
-    
-    
-    
     
     public void getData(String fileName){
         if (fileName.isEmpty()) {

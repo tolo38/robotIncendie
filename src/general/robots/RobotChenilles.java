@@ -34,15 +34,8 @@ public class RobotChenilles extends AbstractRobot {
         return this.getVitesse();
     }
     
-    /**
-     *
-     * @throws exceptions.WrongPositionException
-     */
     @Override
-    public void remplirReservoir() throws WrongPositionException {
-        if (this.getPosition().getNature() != NatureTerrain.EAU) {
-            throw new WrongPositionException(this.getPosition());
-        }
+    public void remplirReservoir() {
         this.setCurrentReservoir(this.getTailleReservoir());
     }
     

@@ -32,11 +32,9 @@ public class RobotPattes extends AbstractRobot {
     
     /**
      * Un robot à pattes ne se remplit jamais
-     * @throws exceptions.WrongPositionException
      */
     @Override
-    public void remplirReservoir() throws WrongPositionException {
-        throw new WrongPositionException(this.getPosition());
+    public void remplirReservoir() {
     }
     
     public String getType() {

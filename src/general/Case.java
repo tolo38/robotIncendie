@@ -34,6 +34,11 @@ public class Case {
         this.nature = natureTerrain;
     }
     
+    @Override
+    public String toString() {
+        return "(" + this.ligne + "," + this.colonne +")";
+    }
+    
     /**
      *
      * @param direction

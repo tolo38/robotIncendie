@@ -26,15 +26,9 @@ public class RobotRoues extends AbstractRobot {
     public RobotRoues(Case position, double vitesse) {
         super(position, 5000, vitesse, 20, 10 * 60);
     }
-    /**
-     *
-     * @throws exceptions.WrongPositionException
-     */
+    
     @Override
-    public void remplirReservoir() throws WrongPositionException {
-        if (this.getPosition().getNature() != NatureTerrain.EAU) {
-            throw new WrongPositionException(this.getPosition());
-        }
+    public void remplirReservoir() {
         this.setCurrentReservoir(this.getTailleReservoir());
     }
     

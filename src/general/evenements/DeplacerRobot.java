@@ -28,8 +28,8 @@ public class DeplacerRobot extends Evenement {
         // TODO suivant le type du robot et le terrain /!\
         try {
             this.robot.setPosition(this.getDataGame().getCarte().getVoisin(this.robot.getPosition(), direction));
-        } catch(Exception e) {
-            System.out.println("Forbidden move : " + this.robot + "\n Location: " + this.robot.getPosition() + "can't move" + this.direction);
+        } catch(ForbiddenMoveException e) {
+            System.out.println("Forbidden move : " + this.robot + "\nLocation: " + this.robot.getPosition() + "can't move " + this.direction);
         }
     }
 }

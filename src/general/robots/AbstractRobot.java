@@ -66,9 +66,14 @@ public abstract class AbstractRobot {
         currentReservoir -= vol;
     }
     
-    abstract public void remplirReservoir() throws WrongPositionException;
+    abstract public void remplirReservoir();
     
     abstract public String getType();
+    
+    @Override
+    public String toString() {
+        return "Robot " + this.getType() + " positionné en " + this.getPosition().toString();
+    }
     
     // abstract public void seDeplacer(Direction direction) throws ForbiddenMoveException;
 }

@@ -15,6 +15,7 @@ import general.NatureTerrain;
 public class Drone extends AbstractRobot {
     
     private static double vitesseDrone = 100;
+    public static final long tempsRemplissage = 30 * 60;
 
     /**
      * tailleReservoir = 10000L
@@ -30,15 +31,8 @@ public class Drone extends AbstractRobot {
         super(position, 10000, vitesse, qteDeversee, tempsRemplissage);
     }
     
-    /**
-     *
-     * @throws exceptions.WrongPositionException
-     */
     @Override
-    public void remplirReservoir() throws WrongPositionException {
-        if (this.getPosition().getNature() != NatureTerrain.EAU) {
-            throw new WrongPositionException(this.getPosition());
-        }
+    public void remplirReservoir() {
         this.setCurrentReservoir(this.getTailleReservoir());
     }
     
