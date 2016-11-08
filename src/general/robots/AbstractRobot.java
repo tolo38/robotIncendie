@@ -8,6 +8,7 @@ import exceptions.*;
 import general.Case;
 import general.Direction;
 import general.NatureTerrain;
+import general.robots.UtileRobot;
 
 public abstract class AbstractRobot {
     private Case position;
@@ -66,7 +67,9 @@ public abstract class AbstractRobot {
         currentReservoir -= vol;
     }
     
-    abstract public void remplirReservoir();
+    public void remplirReservoir() throws WrongPositionException {
+        this.setCurrentReservoir(this.getTailleReservoir());
+    }
     
     abstract public String getType();
     

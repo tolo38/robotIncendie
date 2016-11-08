@@ -2,6 +2,7 @@ package general;
 
 import general.evenements.DeplacerRobot;
 import general.evenements.Evenement;
+import general.evenements.RemplirReservoir;
 import general.robots.AbstractRobot;
 import general.robots.Drone;
 import general.robots.RobotChenilles;
@@ -38,6 +39,7 @@ public class DonneesSimulation implements Simulable {
         this.getData("cartes/carteSujet.map");
         
         // bourrins pour tester
+        this.simulateur.addEvenement(new RemplirReservoir(2, this, this.robots.get(0)));
         this.simulateur.addEvenement(new DeplacerRobot(1, this, this.robots.get(0), Direction.NORD));
         this.simulateur.addEvenement(new DeplacerRobot(2, this, this.robots.get(0), Direction.NORD));
         this.simulateur.addEvenement(new DeplacerRobot(3, this, this.robots.get(0), Direction.NORD));

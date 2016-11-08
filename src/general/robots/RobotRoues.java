@@ -28,8 +28,12 @@ public class RobotRoues extends AbstractRobot {
     }
     
     @Override
-    public void remplirReservoir() {
-        this.setCurrentReservoir(this.getTailleReservoir());
+    public void remplirReservoir() throws WrongPositionException {
+        boolean allowed = UtileRobot.nextToWater(this.getPosition());
+        if (allowed) {
+            super.remplirReservoir();
+        }
+        else throw new WrongPositionException(this.getPosition());
     }
     
     public String getType() {
