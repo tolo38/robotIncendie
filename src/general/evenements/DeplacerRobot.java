@@ -5,9 +5,7 @@
  */
 package general.evenements;
 
-import exceptions.ForbiddenMoveException;
 import general.Direction;
-import general.DonneesSimulation;
 import general.robots.AbstractRobot;
 
 /**
@@ -32,5 +30,10 @@ public class DeplacerRobot extends Evenement {
         } catch(ForbiddenMoveException e) {
             System.out.println("Forbidden move : " + this.robot + "\nLocation: " + this.robot.getPosition() + "can't move " + this.direction);
         }*/
+    }
+
+    @Override
+    public void reset() {
+        robot.reset();
     }
 }

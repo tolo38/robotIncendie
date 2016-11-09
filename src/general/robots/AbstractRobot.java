@@ -18,6 +18,8 @@ public abstract class AbstractRobot {
     private double qteDeversee;    // en 1 seconde
                                 // à mettre à jour pr les drones
     private long tempsRemplissage;
+    
+    private Case initPosition;
 
     /**
      *
@@ -30,10 +32,12 @@ public abstract class AbstractRobot {
     public AbstractRobot(Case position, int tailleReservoir, double vitesse, double
             qteDeversee, long tempsRemplissage) {
         this.position = position;
+        this.initPosition = position;
         this.tailleReservoir = tailleReservoir;
         this.vitesse = vitesse;
         this.qteDeversee = qteDeversee;
         this.tempsRemplissage = tempsRemplissage;
+        this.currentReservoir = this.tailleReservoir;
     }
     
     public Case getPosition() {
@@ -83,4 +87,9 @@ public abstract class AbstractRobot {
     }
 
     abstract public void deplacerRobot(Direction direction);
+
+    public void reset() {
+        position = initPosition;
+        currentReservoir = tailleReservoir;
+    }
 }

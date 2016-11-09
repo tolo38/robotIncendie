@@ -26,6 +26,10 @@ public class Simulateur {
     public long getDateSimulation() {
         return dateSimulation;
     }
+    
+    public void setDateSImulation(long dateSimulation) {
+        this.dateSimulation = dateSimulation;
+    }
 
     public HashMap<Long, ArrayList<Evenement>> getListEvenements() {
         return listEvenements;

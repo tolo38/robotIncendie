@@ -19,4 +19,6 @@ public abstract class Evenement {
     }
     
     public abstract void execute();
+    
+    abstract public void reset();
 }

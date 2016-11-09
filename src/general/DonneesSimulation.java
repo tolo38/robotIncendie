@@ -21,6 +21,8 @@ import gui.Oval;
 import gui.Rectangle;
 import gui.Simulable;
 import gui.Text;
+import java.util.Iterator;
+import java.util.Set;
 
 public class DonneesSimulation implements Simulable {
     private ArrayList<AbstractRobot> robots;
@@ -91,21 +93,33 @@ public class DonneesSimulation implements Simulable {
 
     @Override
     public void next() {
-        // si la simulatio est terminée on ne fait rien
+        // si la simulation est terminée on ne fait rien
         if (simulateur.simulationTerminee()) return;
         
         this.simulateur.incrementeDate();
         for (Evenement e : simulateur.getListEvenements().get(simulateur.getDateSimulation())) {
             e.execute();
         }
-        
         draw();
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void restart() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.simulateur.setDateSImulation(0);
+        
+        Set dates = simulateur.getListEvenements().keySet();
+        Iterator itDates = dates.iterator();
+        while (itDates.hasNext()){
+           long date = (long) itDates.next();
+           ArrayList listEventsDate = simulateur.getListEvenements().get(date);
+            for (Iterator it = listEventsDate.iterator(); it.hasNext();) {
+                Evenement event = (Evenement) it.next();
+                event.reset();
+            }
+
+        }
+        
+        this.draw();
     }
 
     private void draw() {
