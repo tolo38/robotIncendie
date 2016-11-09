@@ -23,17 +23,12 @@ public class DeplacerRobot extends Evenement {
     }
     
     public void execute() {
-        // TODO suivant le type du robot et le terrain /!\
+        // TODO suivant le type du robot et le terrain (ds le robot correspondant)
         robot.deplacerRobot(direction);
         /*try {
             this.robot.setPosition(this.getDataGame().getCarte().getVoisin(this.robot.getPosition(), direction));
         } catch(ForbiddenMoveException e) {
             System.out.println("Forbidden move : " + this.robot + "\nLocation: " + this.robot.getPosition() + "can't move " + this.direction);
         }*/
-    }
-
-    @Override
-    public void reset() {
-        robot.reset();
     }
 }

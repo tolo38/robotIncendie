@@ -1,5 +1,8 @@
 package general;
 
+import general.robots.AbstractRobot;
+import general.robots.UtileRobot;
+
 
 /*
         Défini par :
@@ -31,6 +34,13 @@ public class Incendie {
 
     public int getEauNecessaire() {
         return eauNecessaire;
+    }
+    
+    public void intervention(int qteDeversee) {
+        eauNecessaire -= qteDeversee;
+        if (qteDeversee <= 0) {
+            //UtileRobot.getDataGame().addEvenement(new IncendieEteint(AbstractRobot robot, Incendie incendie));
+        }
     }
     
     public void reset() {

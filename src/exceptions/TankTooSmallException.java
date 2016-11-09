@@ -9,4 +9,12 @@ public class TankTooSmallException extends Exception {
         this.currentReservoir = currentReservoir;
         this.vol = vol;
     }
+
+    public int getCurrentReservoir() {
+        return currentReservoir;
+    }
+
+    public int getVol() {
+        return vol;
+    }
 }

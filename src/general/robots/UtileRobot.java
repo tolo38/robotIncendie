@@ -25,6 +25,10 @@ public class UtileRobot {
     public static void setDataGame(DonneesSimulation dataGame) {
         UtileRobot.dataGame = dataGame;
     }
+
+    public static DonneesSimulation getDataGame() {
+        return dataGame;
+    }
     
     public static boolean aboveWater(Case position) {
         if (position.getNature() == NatureTerrain.EAU) return true;

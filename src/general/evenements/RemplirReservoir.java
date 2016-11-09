@@ -33,10 +33,5 @@ public class RemplirReservoir extends Evenement {
             System.out.println("on ne peut pas remplir un " + robot.getType() + " ici" );
         }
     }
-
-    @Override
-    public void reset() {
-        robot.reset();
-    }
     
 }

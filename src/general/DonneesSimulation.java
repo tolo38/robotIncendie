@@ -1,13 +1,7 @@
 package general;
 
-import general.evenements.DeplacerRobot;
 import general.evenements.Evenement;
-import general.evenements.RemplirReservoir;
 import general.robots.AbstractRobot;
-import general.robots.Drone;
-import general.robots.RobotChenilles;
-import general.robots.RobotPattes;
-import general.robots.RobotRoues;
 import general.robots.UtileRobot;
 import io.CopieurDonnees;
 import java.io.FileNotFoundException;
@@ -20,9 +14,6 @@ import gui.GUISimulator;
 import gui.Oval;
 import gui.Rectangle;
 import gui.Simulable;
-import gui.Text;
-import java.util.Iterator;
-import java.util.Set;
 
 public class DonneesSimulation implements Simulable {
     private ArrayList<AbstractRobot> robots;
@@ -40,7 +31,6 @@ public class DonneesSimulation implements Simulable {
         this.simulateur = new Simulateur();
         this.getData("cartes/carteSujet.map");
         
-               
         // pour la genericite
         UtileRobot.setDataGame(this);
         
@@ -106,7 +96,15 @@ public class DonneesSimulation implements Simulable {
     @Override
     public void restart() {
         this.simulateur.setDateSImulation(0);
+        for (AbstractRobot robot : robots) {
+            robot.reset();
+        }
+        for (Incendie incendie : incendies) {
+            incendie.reset();
+        }
         
+        /*
+         * parcours des evenements pour reset()
         Set dates = simulateur.getListEvenements().keySet();
         Iterator itDates = dates.iterator();
         while (itDates.hasNext()){
@@ -118,6 +116,7 @@ public class DonneesSimulation implements Simulable {
             }
 
         }
+        */
         
         this.draw();
     }

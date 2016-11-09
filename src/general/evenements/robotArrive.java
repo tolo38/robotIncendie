@@ -22,10 +22,5 @@ public class robotArrive extends Evenement {
         System.out.println("Robot " + robot + "has reached its destination: " + robot.getPosition());
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-    @Override
-    public void reset() {
-        robot.reset();
-    }
     
 }
