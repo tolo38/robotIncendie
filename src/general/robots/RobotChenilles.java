@@ -61,5 +61,10 @@ public class RobotChenilles extends AbstractRobot {
             System.out.println("Forbidden move : " + this + "\nLocation: " + this.getPosition() + " can't move " + direction);
         }
     }
+
+    @Override
+    public boolean isASourceCase(Case sCase) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

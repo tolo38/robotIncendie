@@ -1,6 +1,7 @@
 package io;
 
 
+import general.Case;
 import general.Incendie;
 import general.NatureTerrain;
 import general.robots.Drone;
@@ -160,8 +161,8 @@ public class CopieurDonnees {
 
             System.out.println("position = (" + lig + "," + col
                     + ");\t intensite = " + intensite);
-            
-            dataGame.getIncendies().add(new Incendie(lig, col, intensite));
+            Case iCase = dataGame.getCarte().getCase(lig, col);
+            dataGame.getIncendies().add(new Incendie(iCase, intensite));
 
         } catch (NoSuchElementException e) {
             throw new DataFormatException("format d'incendie invalide. "

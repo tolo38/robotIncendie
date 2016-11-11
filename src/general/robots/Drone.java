@@ -36,6 +36,7 @@ public class Drone extends AbstractRobot {
     @Override
     public void remplirReservoir() throws WrongPositionException {
         boolean allowed = UtileRobot.aboveWater(this.getPosition());
+        System.out.println("allowed : " +this.getPosition().getNature());
         if (allowed) {
             super.remplirReservoir();
         } else throw new WrongPositionException(this.getPosition());
@@ -53,6 +54,11 @@ public class Drone extends AbstractRobot {
         } catch (ForbiddenMoveException ex) {
             System.out.println("Forbidden move : " + this + "\nLocation: " + this.getPosition() + "can't move " + direction);
         }
+    }
+
+    @Override
+    public boolean isASourceCase(Case sCase) {
+        return (sCase.getNature() == NatureTerrain.EAU);
     }
     
 }

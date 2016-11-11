@@ -75,6 +75,8 @@ public abstract class AbstractRobot {
         currentReservoir -= vol;
     }
     
+    abstract public boolean isASourceCase(Case sCase);
+    
     public void remplirReservoir() throws WrongPositionException {
         this.setCurrentReservoir(this.getTailleReservoir());
     }

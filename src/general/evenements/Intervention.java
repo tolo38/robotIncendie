@@ -32,6 +32,12 @@ public class Intervention extends Evenement {
             qteEffectivementDeversee = ex.getCurrentReservoir();
         }
         incendie.intervention(qteEffectivementDeversee);
+        int eau = incendie.getEauNecessaire();
+        System.out.println("le robot a deversé " + qteDeversee + "L d'eau.");
+        System.out.println("il faut encore déverser " + eau + "L d'eau.");
+        if (eau == 0) {
+            new IncendieEteint();
+        }
     }
     
 }
