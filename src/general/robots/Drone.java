@@ -23,7 +23,7 @@ import plusCourtChemin.Chemin;
 public class Drone extends AbstractRobot {
     
     private static final double DEFAUTVITESSE = 100;
-    private static final long TEMPSREMPLISSAGE = 30 * 60;
+    private static final long TEMPSREMPLISSAGE = 30* 60;
     private static final int TAILLERESERVOIR = 10000;
     private static final int QUNITAIREDEVERSER = 10000;
     private static final int TUNITAIREDEVERSER = 30;

@@ -146,6 +146,7 @@ public class PlusCourtChemin {
             listCases.addFirst((double)sommet.getCase());
             sommet = final_couts_sommets.get(sommet.getParent());
         }
+        listCases.addFirst((double)depart);
         listCases.addFirst(cout);
         return listCases;
     }

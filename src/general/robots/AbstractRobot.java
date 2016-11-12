@@ -77,7 +77,7 @@ public abstract class AbstractRobot {
     }
     
     public boolean isEmpty() {
-        return (currentReservoir >= qteUnitaireDeversee);
+        return (currentReservoir < qteUnitaireDeversee);
     }
     
     public double getVitesse(NatureTerrain nature) {

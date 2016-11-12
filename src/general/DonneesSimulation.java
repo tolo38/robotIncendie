@@ -31,7 +31,6 @@ public class DonneesSimulation implements Simulable {
         carte = null;
         this.simulateur = new Simulateur();
         this.getData("cartes/carteSujet.map");
-        carte.setTailleCases(100);
         
         // pour la genericite
         UtileRobot.setDataGame(this);
@@ -145,8 +144,10 @@ public class DonneesSimulation implements Simulable {
         // affichage des incendies
         for (Incendie incendie : this.incendies) {
             // System.out.println(robot.getTailleReservoir());
-            gui.addGraphicalElement(new Oval(incendie.getColonne() * 50
-                    + 15, incendie.getLigne() * 50 + 25, Color.orange, Color.orange, 20));
+            if(!incendie.eteint()) {
+                gui.addGraphicalElement(new Oval(incendie.getColonne() * 50
+                        + 15, incendie.getLigne() * 50 + 25, Color.orange, Color.orange, 20));
+            }
         }
         
         // affichage des robots
