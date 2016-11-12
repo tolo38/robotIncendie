@@ -3,6 +3,7 @@ package general.robots;
 
 import general.robots.AbstractRobot;
 import exceptions.ForbiddenMoveException;
+import exceptions.TankTooSmallException;
 import exceptions.WrongPositionException;
 import exceptions.WrongVitesseException;
 import general.Carte;
@@ -21,8 +22,11 @@ import plusCourtChemin.Chemin;
  */
 public class Drone extends AbstractRobot {
     
-    private static double vitesseDrone = 100;
-    public static final long tempsRemplissage = 30 * 60;
+    private static final double DEFAUTVITESSE = 100;
+    private static final long TEMPSREMPLISSAGE = 30 * 60;
+    private static final int TAILLERESERVOIR = 10000;
+    private static final int QUNITAIREDEVERSER = 10000;
+    private static final int TUNITAIREDEVERSER = 30;
 
     /**
      * tailleReservoir = 10000L
@@ -30,16 +34,15 @@ public class Drone extends AbstractRobot {
      * @param qteDeversee
      * @param tempsRemplissage
      */
-    public Drone(Case position, double qteDeversee, long tempsRemplissage) {
-        super(position, 10000, vitesseDrone, qteDeversee, tempsRemplissage);
+    public Drone(Case position) {
+        super(position, TAILLERESERVOIR, DEFAUTVITESSE, QUNITAIREDEVERSER, TEMPSREMPLISSAGE, TUNITAIREDEVERSER);
     }
     
     
-    public Drone(Case position, double qteDeversee, long tempsRemplissage, double vitesse) {
-        super(position, 10000, vitesse, qteDeversee, tempsRemplissage);
+    public Drone(Case position, double vitesse) {
+        super(position, TAILLERESERVOIR, vitesse, QUNITAIREDEVERSER, TEMPSREMPLISSAGE, TUNITAIREDEVERSER);
         try{
-            setVitesse(vitesse);
-            vitesseDrone = vitesse;
+            vitesseAutorise(vitesse);
         }catch(WrongVitesseException e){
             System.out.println("Error : Vitesse négative "+e.getVitesse());
         }
@@ -48,8 +51,10 @@ public class Drone extends AbstractRobot {
         
     }
     
-    public void setVitesse(double vitesse) throws WrongVitesseException{
-        if(vitesse<0 & vitesse<151){
+    
+    
+    public void vitesseAutorise(double vitesse) throws WrongVitesseException{
+        if(vitesse<0 && vitesse>151){
             throw new WrongVitesseException(vitesse);
         }
     }
@@ -62,6 +67,7 @@ public class Drone extends AbstractRobot {
             super.remplirReservoir();
         } else throw new WrongPositionException(this.getPosition());
     }
+    
     
     public String getType() {
         return "DRONE";
@@ -102,34 +108,44 @@ public class Drone extends AbstractRobot {
                 if(i==0){
                     // Sur la premiere ligne : Nord impossible
                     // On ajoute le deplacement Sud
-                    chemins.add(new Chemin((i+1)*carte.getNbLignes()+j, vitesseDrone, carte.getTailleCases()));
+                    chemins.add(new Chemin((i+1)*carte.getNbLignes()+j, super.getVitesse(), carte.getTailleCases()));
                 }else if(i==carte.getNbLignes()-1){
                     // Sur la derniere ligne : Sud impossible
                     // On ajoute le deplacement Nord
-                    chemins.add(new Chemin((i-1)*carte.getNbLignes()+j, vitesseDrone, carte.getTailleCases()));
+                    chemins.add(new Chemin((i-1)*carte.getNbLignes()+j, super.getVitesse(), carte.getTailleCases()));
                 }else{
                     // On ajoute les deplacements Nord et Sud
-                    chemins.add(new Chemin((i-1)*carte.getNbLignes()+j, vitesseDrone, carte.getTailleCases()));
-                    chemins.add(new Chemin((i+1)*carte.getNbLignes()+j, vitesseDrone, carte.getTailleCases()));
+                    chemins.add(new Chemin((i-1)*carte.getNbLignes()+j, super.getVitesse(), carte.getTailleCases()));
+                    chemins.add(new Chemin((i+1)*carte.getNbLignes()+j, super.getVitesse(), carte.getTailleCases()));
                 }
                 // Traitement des Est / Ouest
                 if(j==0){
                     // Sur la premiere colonne : Ouest impossible
                     // On ajoute le deplacement Est
-                    chemins.add(new Chemin(i*carte.getNbLignes()+j+1, vitesseDrone, carte.getTailleCases()));
+                    chemins.add(new Chemin(i*carte.getNbLignes()+j+1, super.getVitesse(), carte.getTailleCases()));
                 }else if(j==carte.getNbColonnes()-1){
                     // Sur la derniere colonne : Est impossible
                     // On ajoute le deplacement Ouest
-                    chemins.add(new Chemin(i*carte.getNbLignes()+j-1, vitesseDrone, carte.getTailleCases()));
+                    chemins.add(new Chemin(i*carte.getNbLignes()+j-1, super.getVitesse(), carte.getTailleCases()));
                 }else{
                     // On ajoute les deplacements Est et Ouest
-                    chemins.add(new Chemin(i*carte.getNbLignes()+j+1, vitesseDrone, carte.getTailleCases()));
-                    chemins.add(new Chemin(i*carte.getNbLignes()+j-1, vitesseDrone, carte.getTailleCases()));
+                    chemins.add(new Chemin(i*carte.getNbLignes()+j+1, super.getVitesse(), carte.getTailleCases()));
+                    chemins.add(new Chemin(i*carte.getNbLignes()+j-1, super.getVitesse(), carte.getTailleCases()));
                 }
                 graphe.put(i*carte.getNbLignes()+j, chemins);
             }
         }
         return graphe;
+    }
+
+    @Override
+    public double getVitesse(Case c) {
+        return super.getVitesse();
+    }
+    
+    @Override
+    public boolean testCaseValid(Case cases) {
+        return true;
     }
     
 }

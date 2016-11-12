@@ -17,8 +17,12 @@ import plusCourtChemin.Chemin;
  */
 public class RobotPattes extends AbstractRobot {
     
-    private static double vitesseRobotPattes = 30;
-
+    private static final double DEFAUTVITESSE = 30;
+    private static final long TEMPSREMPLISSAGE = 0;
+    private static final int TAILLERESERVOIR = Integer.MAX_VALUE;
+    private static final int QUNITAIREDEVERSER = 10;
+    private static final int TUNITAIREDEVERSER = 1;
+    
     /**
      * tailleReservoir : infinie
      * qteDeversee : 10L en 1 seconde
@@ -26,7 +30,7 @@ public class RobotPattes extends AbstractRobot {
      * @param position
      */
     public RobotPattes(Case position) {
-        super(position, Integer.MAX_VALUE, vitesseRobotPattes, 10, 0);
+        super(position, TAILLERESERVOIR, DEFAUTVITESSE, QUNITAIREDEVERSER, TEMPSREMPLISSAGE, TUNITAIREDEVERSER);
     }
     
     @Override
@@ -61,7 +65,7 @@ public class RobotPattes extends AbstractRobot {
 
     @Override
     public boolean isASourceCase(Case sCase) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return false;
     }
     
      /*
@@ -83,16 +87,8 @@ public class RobotPattes extends AbstractRobot {
                 LinkedList chemins = new LinkedList<Chemin>();
                 
                 
-                double vitesseRobot = vitesseRobotPattes;
-                Case currentCase = carte.getCase(i, j);
-                switch(currentCase.getNature()){
-                    case EAU:
-                        vitesseRobot = -1;
-                        break;
-                    case ROCHE:
-                        vitesseRobot = 10;
-                        break;   
-                }
+                double vitesseRobot = getVitesse(carte.getCase(i, j));
+                
                 if(vitesseRobot>0){
                      // Traitement des Nord / Sud
                     if(i==0){
@@ -151,6 +147,26 @@ public class RobotPattes extends AbstractRobot {
             return false;
         }
         return true;
+    }
+    
+    @Override
+    public boolean testCaseValid(Case cases) {
+        if(cases.getNature()==NatureTerrain.EAU) {
+            return false;
+        }
+        return true;
+    }
+    
+    @Override
+    public double getVitesse(Case c) { 
+        switch(c.getNature()){
+            case EAU:
+                return -1;
+            case ROCHE:
+                return 10;
+            default:
+                return super.getVitesse();
+        }
     }
     
 }

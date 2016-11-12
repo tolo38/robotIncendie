@@ -18,8 +18,11 @@ import plusCourtChemin.Chemin;
  */
 public class RobotRoues extends AbstractRobot {
     
-    private static double vitesseRobotRoues = 80;
-
+    private static final double DEFAUTVITESSE = 80;
+    private static final long TEMPSREMPLISSAGE = 10 * 60;
+    private static final int TAILLERESERVOIR = 5000;
+    private static final int QUNITAIREDEVERSER = 100;
+    private static final int TUNITAIREDEVERSER = 5;
     /**
      * tailleReservoir : 5000L
      * qteDeversee : 100L en 5 secondes
@@ -27,21 +30,20 @@ public class RobotRoues extends AbstractRobot {
      * @param position
      */
     public RobotRoues(Case position) {
-        super(position, 5000, vitesseRobotRoues, 20, 10 * 60);
+        super(position, TAILLERESERVOIR, DEFAUTVITESSE, QUNITAIREDEVERSER, TEMPSREMPLISSAGE, TUNITAIREDEVERSER);
     }
     
      
     public RobotRoues(Case position, double vitesse) {
-        super(position, 5000, vitesse, 20, 10 * 60);
+        super(position, TAILLERESERVOIR, vitesse, QUNITAIREDEVERSER, TEMPSREMPLISSAGE, TUNITAIREDEVERSER);
         try{
-            setVitesse(vitesse);
-            vitesseRobotRoues = vitesse;
+            vitesseAutorise(vitesse);
         }catch(WrongVitesseException e){
             System.out.println("Error : Vitesse négative "+e.getVitesse());
         }
     }
     
-    public void setVitesse(double vitesse) throws WrongVitesseException{
+    public void vitesseAutorise(double vitesse) throws WrongVitesseException{
         if(vitesse<0){
             throw new WrongVitesseException(vitesse);
         }
@@ -74,7 +76,7 @@ public class RobotRoues extends AbstractRobot {
 
     @Override
     public boolean isASourceCase(Case sCase) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return UtileRobot.nextToWater(sCase);
     }
     
      /*
@@ -93,20 +95,8 @@ public class RobotRoues extends AbstractRobot {
                 LinkedList chemins = new LinkedList<Chemin>();
                 
                 
-                double vitesseRobot = vitesseRobotRoues;
-                Case currentCase = carte.getCase(i, j);
-                switch(currentCase.getNature()){
-                    case EAU:
-                        vitesseRobot = -1;
-                        break;
-                    case ROCHE:
-                        vitesseRobot = -1;
-                        break;
-                    case FORET:
-                        vitesseRobot = -1;
-                        break;
-                    
-                }
+                double vitesseRobot = getVitesse(carte.getCase(i, j));
+                
                 if(vitesseRobot>0){
                      // Traitement des Nord / Sud
                     if(i==0){
@@ -166,4 +156,27 @@ public class RobotRoues extends AbstractRobot {
         }
         return true;
     }
+    
+    @Override
+    public boolean testCaseValid(Case cases) {
+        if(cases.getNature()==NatureTerrain.EAU ||  cases.getNature()==NatureTerrain.ROCHE ||  cases.getNature()== NatureTerrain.FORET){
+            return false;
+        }
+        return true;
+    }
+    
+     @Override
+    public double getVitesse(Case c) { 
+        switch(c.getNature()){
+            case EAU:
+                return -1;
+            case ROCHE:
+                return -1;
+            case FORET:
+                return -1;
+            default:
+                return super.getVitesse();
+        }
+    }
+    
 }

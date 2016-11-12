@@ -18,17 +18,18 @@ public class OrdreChefPompier extends Evenement {
     private AbstractRobot robot;
        
     
-    public OrdreChefPompier(AbstractRobot robot) {
+    public OrdreChefPompier(long date, AbstractRobot robot) {
+        super(date);
         this.robot = robot;
     }
 
-    public static void setChefPompier(ChefPompier chefP) {
-        this.chefP = chefP;
+    public static void setChefPompier(ChefPompier chefPompier) {
+        chefP = chefPompier;
     }
     
     @Override
     public void execute() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        chefP.ordrePourRobot(super.getDate(),robot);
     }
     
 }

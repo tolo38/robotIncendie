@@ -7,9 +7,10 @@ package general;
 
 import general.evenements.OrdreChefPompier;
 import general.evenements.DeplacerRobot;
-import general.evenements.Intervention;
+import general.evenements.InterventionUnitaire;
 import general.evenements.RemplirReservoir;
 import general.robots.AbstractRobot;
+import general.robots.RobotPattes;
 import general.robots.UtileRobot;
 import gui.GUISimulator;
 import java.awt.Color;
@@ -32,12 +33,69 @@ public class ChefPompier {
         public void debutMission() {
             OrdreChefPompier.setChefPompier(this);
             for (AbstractRobot robot : donneesSimulation.getRobots()) {
-                ordrePourRobot(robot,0);
+                ordrePourRobot(30,robot);
                 
             }
         }
 
-    private void ordrePourRobot(AbstractRobot robot, int date) {
+    public void ordrePourRobot(long date, AbstractRobot robot) {
+        //calcule de l'ordre
+        Carte carte = donneesSimulation.getCarte();
+        PlusCourtChemin pcc = new PlusCourtChemin(carte, robot);
+        double tempsOrdreMin = Double.MAX_VALUE;
+        LinkedList<Double> versSource;
+        LinkedList<Double> versIncendie;
+        LinkedList<Double> versSourceMin = null;
+        LinkedList<Double> versIncendieMin = null;
+        Incendie incendieAEteindre = null;
+        for (Incendie incendie : donneesSimulation.getIncendies()) {
+            if (!incendie.eteint()) {  //parcoure sur les feu allumer
+                incendieAEteindre = incendie;
+            }
+        }
+        for(int i =0; i < donneesSimulation.getCarte().getNbLignes();i++) {
+            for(int j =0 ; j<donneesSimulation.getCarte().getNbColonnes();j++) {
+                Case sourceCase = donneesSimulation.getCarte().getCase(i, j);
+                if(robot.isASourceCase(sourceCase) && robot.testCaseValid(sourceCase)) {
+                    //parcoure sur les case sources
+                    //plus court chemin sur robot.getPosition() to sourceCase
+                    versSourceMin = pcc.getParcours(carte.getNumCase(robot.getPosition()),carte.getNumCase(sourceCase));
+                    //plus court chemin sur sourceCase to incendie.getPosition()
+                    versIncendieMin = pcc.getParcours(carte.getNumCase(sourceCase),carte.getNumCase(incendieAEteindre.getPosition()));
+                }  
+             }
+        }
+        long t = date;
+        if(versSourceMin != null) {
+            LinkedList<Direction> DirSource = UtileRobot.numCaseToDirection(versSourceMin);
+            for(Direction direction : DirSource) {
+                donneesSimulation.addEvenement(new DeplacerRobot(t, robot, direction));
+                t += UtileRobot.getTempsTraverser(robot);
+            }
+        } //sinon deja sur source
+        if(!(robot instanceof RobotPattes)) {
+        donneesSimulation.addEvenement(new RemplirReservoir(t, robot));
+        t += robot.getTempsRemplissage();
+        }
+        if(versSourceMin != null) {
+            LinkedList<Direction> DirIncedie = UtileRobot.numCaseToDirection(versIncendieMin);
+            for(Direction direction : DirIncedie) {
+                donneesSimulation.addEvenement(new DeplacerRobot(t, robot, direction));
+                t += UtileRobot.getTempsTraverser(robot);
+            }
+        } //sinon deja sur incendie
+        
+        while(!robot.isEmpty() && !incendieAEteindre.eteint()) {
+            donneesSimulation.addEvenement(new InterventionUnitaire(t, robot, incendieAEteindre));
+            t += robot.getTempsInterventionU();
+        }
+        
+        
+        donneesSimulation.addEvenement(new OrdreChefPompier(t,robot));
+    }
+    
+    /*
+    public void ordrePourRobot(long date, AbstractRobot robot) {
         //calcule de l'ordre
         Carte carte = donneesSimulation.getCarte();
         PlusCourtChemin pcc = new PlusCourtChemin(carte, robot);
@@ -52,7 +110,7 @@ public class ChefPompier {
                 for(int i =0; i < donneesSimulation.getCarte().getNbLignes();i++) {
                     for(int j =0 ; j<donneesSimulation.getCarte().getNbColonnes();j++) {
                         Case sourceCase = donneesSimulation.getCarte().getCase(i, j);
-                        if(robot.isASourceCase(sourceCase)) {
+                        if(robot.isASourceCase(sourceCase) && robot.testCaseValid(sourceCase)) {
                            //parcoure sur les case sources
                            //plus court chemin sur robot.getPosition() to sourceCase
                            versSource = pcc.getParcours(carte.getNumCase(robot.getPosition()),carte.getNumCase(sourceCase));
@@ -73,22 +131,33 @@ public class ChefPompier {
                 }  
              }
         }
-        int t = date;
-        LinkedList<Direction> DirSource = UtileRobot.numCaseToDirection(versSourceMin);
-        for(Direction direction : DirSource) {
-            donneesSimulation.addEvenement(new DeplacerRobot(t, robot, direction));
-            t++;
-        }
+        long t = date;
+        if(versSourceMin != null) {
+            LinkedList<Direction> DirSource = UtileRobot.numCaseToDirection(versSourceMin);
+            for(Direction direction : DirSource) {
+                donneesSimulation.addEvenement(new DeplacerRobot(t, robot, direction));
+                t += UtileRobot.getTempsTraverser(robot);
+            }
+        } //sinon deja sur source
+        if(!(robot instanceof RobotPattes)) {
         donneesSimulation.addEvenement(new RemplirReservoir(t, robot));
-        t++;
-        LinkedList<Direction> DirIncedie = UtileRobot.numCaseToDirection(versIncendieMin);
-        for(Direction direction : DirIncedie) {
-            donneesSimulation.addEvenement(new DeplacerRobot(t, robot, direction));
-            t++;
+        t += robot.getTempsRemplissage();
         }
-        donneesSimulation.addEvenement(new Intervention(t, robot, incendieAEteindre,robot.getTailleReservoir()));
-        t++;
+        if(versSourceMin != null) {
+            LinkedList<Direction> DirIncedie = UtileRobot.numCaseToDirection(versIncendieMin);
+            for(Direction direction : DirIncedie) {
+                donneesSimulation.addEvenement(new DeplacerRobot(t, robot, direction));
+                t += UtileRobot.getTempsTraverser(robot);
+            }
+        } //sinon deja sur incendie
         
-        donneesSimulation.addEvenement(new OrdreChefPompier(robot));
+        while(!robot.isEmpty() && !incendieAEteindre.eteint()) {
+            donneesSimulation.addEvenement(new InterventionUnitaire(t, robot, incendieAEteindre));
+            t += robot.getTempsInterventionU();
+        }
+        
+        
+        donneesSimulation.addEvenement(new OrdreChefPompier(t,robot));
     }
+    */
 }

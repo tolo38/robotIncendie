@@ -25,23 +25,23 @@ public class TestPlusCourtChemin {
         DonneesSimulation dataGame = new DonneesSimulation(gui);
         
         
-        PlusCourtChemin pluscourtchemin = new PlusCourtChemin(dataGame.getCarte(), new Drone(new Case(0, 0, NatureTerrain.EAU), 100, 100, 100));
-        LinkedList<Integer> listCases = new LinkedList<Integer>();
+        PlusCourtChemin pluscourtchemin = new PlusCourtChemin(dataGame.getCarte(), new Drone(new Case(0, 0, NatureTerrain.EAU)));
+        LinkedList<Double> listCases = new LinkedList<Double>();
         listCases = pluscourtchemin.getParcours(0, 43);
         pluscourtchemin.afficheParcours(listCases);
         
-        PlusCourtChemin pluscourtchemin2 = new PlusCourtChemin(dataGame.getCarte(), new RobotChenilles(new Case(0, 0, NatureTerrain.EAU), 100));
-        LinkedList<Integer> listCases2 = new LinkedList<Integer>();
+        PlusCourtChemin pluscourtchemin2 = new PlusCourtChemin(dataGame.getCarte(), new RobotChenilles(new Case(0, 0, NatureTerrain.EAU)));
+        LinkedList<Double> listCases2 = new LinkedList<Double>();
         listCases2 = pluscourtchemin2.getParcours(0, 43);
         pluscourtchemin2.afficheParcours(listCases2);
         
         PlusCourtChemin pluscourtchemin3 = new PlusCourtChemin(dataGame.getCarte(), new RobotPattes(new Case(0, 0, NatureTerrain.EAU)));
-        LinkedList<Integer> listCases3 = new LinkedList<Integer>();
+        LinkedList<Double> listCases3 = new LinkedList<Double>();
         listCases3 = pluscourtchemin3.getParcours(0, 43);
         pluscourtchemin3.afficheParcours(listCases3);
         
         PlusCourtChemin pluscourtchemin4 = new PlusCourtChemin(dataGame.getCarte(), new RobotRoues(new Case(0, 0, NatureTerrain.EAU), 100));
-        LinkedList<Integer> listCases4 = new LinkedList<Integer>();
+        LinkedList<Double> listCases4 = new LinkedList<Double>();
         listCases4 = pluscourtchemin4.getParcours(0, 43);
         pluscourtchemin4.afficheParcours(listCases4);
         

@@ -40,9 +40,6 @@ public class Incendie {
     
     public void intervention(int qteDeversee) {
         eauNecessaire -= qteDeversee;
-        if (qteDeversee <= 0) {
-            //UtileRobot.getDataGame().addEvenement(new IncendieEteint(AbstractRobot robot, Incendie incendie));
-        }
     }
     
     public void reset() {

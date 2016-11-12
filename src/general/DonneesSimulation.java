@@ -14,6 +14,7 @@ import gui.GUISimulator;
 import gui.Oval;
 import gui.Rectangle;
 import gui.Simulable;
+import java.util.LinkedList;
 
 public class DonneesSimulation implements Simulable {
     private ArrayList<AbstractRobot> robots;
@@ -30,6 +31,7 @@ public class DonneesSimulation implements Simulable {
         carte = null;
         this.simulateur = new Simulateur();
         this.getData("cartes/carteSujet.map");
+        carte.setTailleCases(100);
         
         // pour la genericite
         UtileRobot.setDataGame(this);
@@ -87,10 +89,14 @@ public class DonneesSimulation implements Simulable {
         if (simulateur.simulationTerminee()) return;
         
         this.simulateur.incrementeDate();
-        for (Evenement e : simulateur.getListEvenements().get(simulateur.getDateSimulation())) {
-            e.execute();
+        ArrayList<Evenement> listEvenement = simulateur.getListEvenements().get(simulateur.getDateSimulation());
+        if(listEvenement != null) {
+            for (Evenement e : listEvenement) {
+                e.execute();
+            }
         }
-        draw();
+        
+            draw();
     }
 
     @Override

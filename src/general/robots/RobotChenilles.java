@@ -18,8 +18,12 @@ import plusCourtChemin.Chemin;
  */
 public class RobotChenilles extends AbstractRobot {
     
-    private static double vitesseRobotChenilles = 60;
-
+    private static final double DEFAUTVITESSE = 60;
+    private static final long TEMPSREMPLISSAGE = 5 * 60;
+    private static final int TAILLERESERVOIR = 2000;
+    private static final int QUNITAIREDEVERSER = 100;
+    private static final int TUNITAIREDEVERSER = 8;
+    
     /**
      * tailleReservoir : 2000L
      * qteDeversee : 100L en 8 secondes
@@ -27,22 +31,21 @@ public class RobotChenilles extends AbstractRobot {
      * @param position
      */
     public RobotChenilles(Case position) {
-        super(position, 2000, vitesseRobotChenilles, 100 / 8, 5 * 60);
+        super(position, TAILLERESERVOIR, DEFAUTVITESSE, QUNITAIREDEVERSER, TUNITAIREDEVERSER, TUNITAIREDEVERSER);
     }
     
      
     public RobotChenilles(Case position, double vitesse) {
-        super(position, 2000, vitesse, 100 / 8, 5 * 60);
+        super(position, TAILLERESERVOIR, vitesse, QUNITAIREDEVERSER, TUNITAIREDEVERSER, TUNITAIREDEVERSER);
         try{
-            setVitesse(vitesse);
-            vitesseRobotChenilles = vitesse;
+            vitesseAutorise(vitesse);
         }catch(WrongVitesseException e){
             System.out.println("Error : Vitesse négative "+e.getVitesse());
         }
     }
     
     
-    public void setVitesse(double vitesse) throws WrongVitesseException{
+    public void vitesseAutorise(double vitesse) throws WrongVitesseException{
         if(vitesse<0 & vitesse<81){
             throw new WrongVitesseException(vitesse);
         }
@@ -80,11 +83,12 @@ public class RobotChenilles extends AbstractRobot {
             System.out.println("Forbidden move : " + this + "\nLocation: " + this.getPosition() + " can't move " + direction);
         }
     }
-
+    
     @Override
     public boolean isASourceCase(Case sCase) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return UtileRobot.nextToWater(sCase);
     }
+    
     /*
         Construction du graphe pour le Robot a chenilles:
         Vitesse TERRAIN_LIBRE, HABITAT, UNSET  : 60 km/h
@@ -105,20 +109,8 @@ public class RobotChenilles extends AbstractRobot {
                 LinkedList chemins = new LinkedList<Chemin>();
                 
                 
-                double vitesseRobot = vitesseRobotChenilles;
-                Case currentCase = carte.getCase(i, j);
-                switch(currentCase.getNature()){
-                    case EAU:
-                        vitesseRobot = -1;
-                        break;
-                    case ROCHE:
-                        vitesseRobot = -1;
-                        break;
-                    case FORET:
-                        vitesseRobot = vitesseRobotChenilles*0.5;
-                        break;
-                    
-                }
+                double vitesseRobot = getVitesse(carte.getCase(i, j));
+                
                 if(vitesseRobot>0){
                      // Traitement des Nord / Sud
                     if(i==0){
@@ -178,5 +170,28 @@ public class RobotChenilles extends AbstractRobot {
         }
         return true;
     }
+    
+    @Override
+    public boolean testCaseValid(Case cases) {
+        if(cases.getNature()==NatureTerrain.EAU ||  cases.getNature()==NatureTerrain.ROCHE) {
+            return false;
+        }
+        return true;
+    }
+    
+    @Override
+    public double getVitesse(Case c) {
+        switch(c.getNature()){
+            case EAU:
+                return -1;
+            case ROCHE:
+                return -1;
+            case FORET:
+                return super.getVitesse()*0.5;
+            default:
+                return super.getVitesse();
+        }
+    }
+    
  
 }

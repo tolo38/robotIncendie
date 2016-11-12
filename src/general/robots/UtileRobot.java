@@ -17,12 +17,20 @@ import java.util.ListIterator;
 public class UtileRobot {
     private static DonneesSimulation dataGame;
 
+    private UtileRobot() {
+        
+    }
+    
+    public static double getTempsTraverser(AbstractRobot robot) {
+        return dataGame.getCarte().getTailleCases()/robot.getVitesse(robot.getPosition());
+    }
+    
     static Case caseSuivante(Case position, Direction direction) throws ForbiddenMoveException {
         return dataGame.getCarte().getVoisin(position, direction);
     }
 
     public static LinkedList<Direction> numCaseToDirection(LinkedList<Double> doubleList) {
-        LinkedList<Direction> DirList = null;
+        LinkedList<Direction> DirList = new LinkedList<Direction>();
         ListIterator<Double> it = doubleList.listIterator();
         while(it.hasNext()) {
             double numCase = it.next();
@@ -53,9 +61,6 @@ public class UtileRobot {
         return DirList;
     }
     
-    private UtileRobot() {
-        
-    }
 
     public static void setDataGame(DonneesSimulation dataGame) {
         UtileRobot.dataGame = dataGame;

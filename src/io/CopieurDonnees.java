@@ -225,9 +225,9 @@ public class CopieurDonnees {
             switch (type) {
                 case "DRONE" :
                     if (vitesse != 0) {
-                        dataGame.getRobots().add(new Drone(dataGame.getCarte().getCase(lig, col), 100, 30 * 60, vitesse));
+                        dataGame.getRobots().add(new Drone(dataGame.getCarte().getCase(lig, col), vitesse));
                     } else {
-                        dataGame.getRobots().add(new Drone(dataGame.getCarte().getCase(lig, col), 100, 30 * 60));
+                        dataGame.getRobots().add(new Drone(dataGame.getCarte().getCase(lig, col)));
                     }
                     break;
                 case "ROUES" :

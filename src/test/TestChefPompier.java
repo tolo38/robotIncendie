@@ -9,7 +9,7 @@ import general.ChefPompier;
 import general.Direction;
 import general.DonneesSimulation;
 import general.evenements.DeplacerRobot;
-import general.evenements.Intervention;
+import general.evenements.InterventionUnitaire;
 import general.evenements.RemplirReservoir;
 import general.robots.AbstractRobot;
 import gui.GUISimulator;

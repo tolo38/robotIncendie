@@ -7,7 +7,7 @@ import gui.Simulable;
 import java.awt.Color;
 import general.DonneesSimulation;
 import general.evenements.DeplacerRobot;
-import general.evenements.Intervention;
+import general.evenements.InterventionUnitaire;
 import general.evenements.RemplirReservoir;
 import general.robots.AbstractRobot;
 
@@ -33,7 +33,7 @@ public class TestScenario2 {
         int i;
         for(i=0;robot.getPosition() == donneesSimulation.getIncendies().get(i).getPosition();i++) ;
         for(int j = 0 ; j<4 ; j++) {
-            donneesSimulation.addEvenement(new Intervention(7+4*j, robot, donneesSimulation.getIncendies().get(i),robot.getTailleReservoir()));
+            donneesSimulation.addEvenement(new InterventionUnitaire(7+4*j, robot, donneesSimulation.getIncendies().get(i)));
             donneesSimulation.addEvenement(new DeplacerRobot(8+4*j, robot, Direction.OUEST));
             System.out.println("la nature du terran :" + robot.getPosition().getNature());
             donneesSimulation.addEvenement(new RemplirReservoir(9+4*j, robot));

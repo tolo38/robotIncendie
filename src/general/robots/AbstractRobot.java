@@ -19,9 +19,10 @@ public abstract class AbstractRobot {
     private double vitesse;     // en km/h
     private int tailleReservoir;
     private int currentReservoir;
-    private double qteDeversee;    // en 1 seconde
+    private int qteUnitaireDeversee;   
                                 // à mettre à jour pr les drones
     private long tempsRemplissage;
+    private double tempsInterventionU;
     
     private Case initPosition;
 
@@ -33,15 +34,16 @@ public abstract class AbstractRobot {
      * @param qteDeversee
      * @param tempsRemplissage
      */
-    public AbstractRobot(Case position, int tailleReservoir, double vitesse, double
-            qteDeversee, long tempsRemplissage) {
+    public AbstractRobot(Case position, int tailleReservoir, double vitesse, int
+            qteDeversee, long tempsRemplissage, double tempsInterventionU) {
         this.position = position;
         this.initPosition = position;
         this.tailleReservoir = tailleReservoir;
         this.vitesse = vitesse;
-        this.qteDeversee = qteDeversee;
+        this.qteUnitaireDeversee = qteDeversee;
         this.tempsRemplissage = tempsRemplissage;
         this.currentReservoir = this.tailleReservoir;
+        this.tempsInterventionU = tempsInterventionU;
     }
     
     public Case getPosition() {
@@ -51,6 +53,8 @@ public abstract class AbstractRobot {
     public double getVitesse() {
         return this.vitesse;
     }
+    
+    public abstract double getVitesse(Case c);
     
     public void setPosition(Case position) {
         this.position = position;
@@ -64,19 +68,28 @@ public abstract class AbstractRobot {
         return tempsRemplissage;
     }
 
+    public double getTempsInterventionU() {
+        return tempsInterventionU;
+    }
+    
     public void setCurrentReservoir(int currentReservoir) {
         this.currentReservoir = currentReservoir;
+    }
+    
+    public boolean isEmpty() {
+        return (currentReservoir >= qteUnitaireDeversee);
     }
     
     public double getVitesse(NatureTerrain nature) {
         return this.vitesse;
     }
     
-    public void deverserEau(int vol) throws TankTooSmallException {
-        if (vol > currentReservoir) {
-            throw new TankTooSmallException(currentReservoir, vol);
+    public int deverserEau() throws TankTooSmallException {
+        if (isEmpty()) {
+            throw new TankTooSmallException(currentReservoir, qteUnitaireDeversee);
         }
-        currentReservoir -= vol;
+        currentReservoir -= qteUnitaireDeversee;
+        return qteUnitaireDeversee;
     }
     
     abstract public boolean isASourceCase(Case sCase);
@@ -101,4 +114,5 @@ public abstract class AbstractRobot {
     
     abstract public HashMap<Integer, LinkedList<Chemin>> initGrapheRobot(Carte carte);
     
+    abstract public boolean testCaseValid(Case cases);
 }

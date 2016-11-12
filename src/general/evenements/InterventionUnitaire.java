@@ -9,35 +9,30 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author 66
+ * Permet de derverser une unite d'eau sur l'incendit en fonction du robot
  */
-public class Intervention extends Evenement {
+public class InterventionUnitaire extends Evenement {
     private AbstractRobot robot;
     private Incendie incendie;
-    private int qteDeversee;
     
-    public Intervention(long date, AbstractRobot robot, Incendie incendie, int qteDeversee) {
+    public InterventionUnitaire(long date, AbstractRobot robot, Incendie incendie) {
         super(date);
         this.robot = robot;
         this.incendie = incendie;
-        this.qteDeversee = qteDeversee;
     }
 
     @Override
     public void execute() {
-        int qteEffectivementDeversee = qteDeversee;
+        int qteEffectivementDeversee;
         try {
-            robot.deverserEau(qteDeversee);
+            qteEffectivementDeversee = robot.deverserEau();
+            incendie.intervention(qteEffectivementDeversee);
         } catch (TankTooSmallException ex) {
             qteEffectivementDeversee = ex.getCurrentReservoir();
         }
-        incendie.intervention(qteEffectivementDeversee);
+        //DEBUG
         int eau = incendie.getEauNecessaire();
-        System.out.println("le robot a deversé " + qteDeversee + "L d'eau.");
         System.out.println("il faut encore déverser " + eau + "L d'eau.");
-        if (eau == 0) {
-            new IncendieEteint();
-        }
     }
     
 }

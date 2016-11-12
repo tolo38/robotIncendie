@@ -108,6 +108,9 @@ public class PlusCourtChemin {
         }
         //DEBUG
         //afficheCoutsSommets(final_couts_sommets);
+        if(final_couts_sommets.get(arrivee) == null){
+            System.out.println("");
+        }
         return final_couts_sommets.get(arrivee).getCout();
     }
     
@@ -153,8 +156,8 @@ public class PlusCourtChemin {
         }
     }
     
-    public void afficheParcours(LinkedList<Integer> listCases){
-        for(Integer numCase : listCases){
+    public void afficheParcours(LinkedList<Double> listCases){
+        for(Double numCase : listCases){
             System.out.println("Case : "+numCase);
         }
     }
