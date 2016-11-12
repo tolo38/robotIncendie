@@ -87,18 +87,25 @@ public class ChefPompier {
     private void ordreAllerASource(long date, AbstractRobot robot) {
         Carte carte = donneesSimulation.getCarte();
         PlusCourtChemin pcc = new PlusCourtChemin(carte, robot);
+        LinkedList<Double> versSource;
         LinkedList<Double> versSourceMin = null;
+        int tempsOrdreMin = Integer.MAX_VALUE;
         for(int i =0; i < donneesSimulation.getCarte().getNbLignes();i++) {
             for(int j =0 ; j<donneesSimulation.getCarte().getNbColonnes();j++) {
                 Case sourceCase = donneesSimulation.getCarte().getCase(i, j);
                 if(robot.isASourceCase(sourceCase) && robot.testCaseValid(sourceCase)) {
                     //parcoure sur les case sources
                     //plus court chemin sur robot.getPosition() to sourceCase
-                    versSourceMin = pcc.getParcours(carte.getNumCase(robot.getPosition()),carte.getNumCase(sourceCase));
+                    versSource = pcc.getParcours(carte.getNumCase(robot.getPosition()),carte.getNumCase(sourceCase));
+                    int tps = (int)(double)versSource.removeFirst(); //Double -> int
+                    if(tps < tempsOrdreMin) {
+                               //alors l'ordre (liste des case de robot a source a incendit ok 
+                               tempsOrdreMin = tps;
+                               versSourceMin = (LinkedList<Double>) versSource.clone();
+                           }
                 }  
              }
         }
-        versSourceMin.removeFirst();
         
         //Aller a la source
         if(versSourceMin != null) {
@@ -122,19 +129,28 @@ public class ChefPompier {
         
         Carte carte = donneesSimulation.getCarte();
         PlusCourtChemin pcc = new PlusCourtChemin(carte, robot);
+        LinkedList<Double> versIncendie;
         LinkedList<Double> versIncendieMin = null;
         Incendie incendieAEteindre = null;
+        int tempsOrdreMin = Integer.MAX_VALUE;
         for (Incendie incendie : donneesSimulation.getIncendies()) {
-            if (!incendie.eteint()) {  //parcoure sur les feu allumer
+            if (!incendie.eteint() && robot.testCaseValid(incendie.getPosition())) {  //parcoure sur les feu allumer
                 incendieAEteindre = incendie;
-                 versIncendieMin = pcc.getParcours(carte.getNumCase(robot.getPosition()),carte.getNumCase(incendie.getPosition()));
+                versIncendie = pcc.getParcours(carte.getNumCase(robot.getPosition()),carte.getNumCase(incendie.getPosition()));
+                int tps = (int)(double)versIncendie.removeFirst(); //Double -> int
+                if(tps < tempsOrdreMin) {
+                    //alors l'ordre (liste des case de robot a source a incendit ok 
+                    tempsOrdreMin = tps;
+                    versIncendieMin = (LinkedList<Double>) versIncendie.clone();
+                    incendieAEteindre = incendie;
+                }                
             }
         }
         if(versIncendieMin == null) {
             System.out.println("Fin.......");
             return;
         }
-        versIncendieMin.removeFirst();
+        
         //Aller a l'incendie
         if(versIncendieMin != null) {
             LinkedList<Direction> DirIncedie = UtileRobot.numCaseToDirection(versIncendieMin);

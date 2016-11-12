@@ -1,6 +1,7 @@
 package general;
 
 import general.evenements.Evenement;
+import general.evenements.OrdreChefPompier;
 import general.robots.AbstractRobot;
 import general.robots.UtileRobot;
 import io.CopieurDonnees;
@@ -31,6 +32,21 @@ public class DonneesSimulation implements Simulable {
         carte = null;
         this.simulateur = new Simulateur();
         this.getData("cartes/carteSujet.map");
+        
+        // pour la genericite
+        UtileRobot.setDataGame(this);
+        
+        this.draw();
+    }
+
+    public DonneesSimulation(GUISimulator gui, String file) {
+        this.gui = gui;
+        gui.setSimulable(this);
+        robots = new ArrayList<AbstractRobot>();
+        incendies = new ArrayList<Incendie>();
+        carte = null;
+        this.simulateur = new Simulateur();
+        this.getData("cartes/"+file);
         
         // pour la genericite
         UtileRobot.setDataGame(this);
@@ -107,8 +123,10 @@ public class DonneesSimulation implements Simulable {
         for (Incendie incendie : incendies) {
             incendie.reset();
         }
-      
-        
+        this.simulateur.setDateSImulation(0);
+        this.simulateur.getListEvenements().clear();
+        OrdreChefPompier.getChefPompier().debutMission();
+                
         this.draw();
     }
 

@@ -27,6 +27,10 @@ public class OrdreChefPompier extends Evenement {
         chefP = chefPompier;
     }
     
+    public static ChefPompier getChefPompier() {
+        return chefP;
+    }
+    
     @Override
     public void execute() {
         chefP.ordrePourRobot(super.getDate()+1,robot);

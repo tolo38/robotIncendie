@@ -25,7 +25,8 @@ public class TestChefPompier {
     public static void main(String[] args) {
         // crée la fenêtre graphique dans laquelle dessiner
         GUISimulator gui = new GUISimulator(1000, 1000, Color.BLACK);
-        DonneesSimulation donneesSimulation = new DonneesSimulation(gui);
+        DonneesSimulation donneesSimulation = new DonneesSimulation(gui,"carteSujet.map");
+        //DonneesSimulation donneesSimulation = new DonneesSimulation(gui,"spiralOfMadness-50x50.map");
         new ChefPompier(donneesSimulation);
     }
 }
