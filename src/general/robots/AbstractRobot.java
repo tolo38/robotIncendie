@@ -5,10 +5,14 @@ package general.robots;
  * @author 66
  */
 import exceptions.*;
+import general.Carte;
 import general.Case;
 import general.Direction;
 import general.NatureTerrain;
 import general.robots.UtileRobot;
+import java.util.HashMap;
+import java.util.LinkedList;
+import plusCourtChemin.Chemin;
 
 public abstract class AbstractRobot {
     private Case position;
@@ -94,4 +98,7 @@ public abstract class AbstractRobot {
         position = initPosition;
         currentReservoir = tailleReservoir;
     }
+    
+    abstract public HashMap<Integer, LinkedList<Chemin>> initGrapheRobot(Carte carte);
+    
 }

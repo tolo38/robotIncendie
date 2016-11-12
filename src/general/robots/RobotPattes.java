@@ -3,9 +3,13 @@ package general.robots;
 
 import exceptions.ForbiddenMoveException;
 import exceptions.WrongPositionException;
+import general.Carte;
 import general.Case;
 import general.Direction;
 import general.NatureTerrain;
+import java.util.HashMap;
+import java.util.LinkedList;
+import plusCourtChemin.Chemin;
 
 /**
  *
@@ -58,6 +62,95 @@ public class RobotPattes extends AbstractRobot {
     @Override
     public boolean isASourceCase(Case sCase) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+     /*
+        Construction du graphe pour le Robot a chenilles:
+        Vitesse  : 60 km/h
+        Vitesse ROCHE : 10 km/h
+        Vitesse EAU: 0km/h
+
+        
+    */
+    @Override
+    public HashMap<Integer, LinkedList<Chemin>> initGrapheRobot(Carte carte) {
+        HashMap<Integer, LinkedList<Chemin>> graphe = new HashMap<Integer, LinkedList<Chemin>>();
+        // graphe : tableau contenant, pour chaque case, la liste des cases atteignables
+        // graphe : tableau de Nbcolonnes*NbLignes
+        for(int i=0; i<carte.getNbLignes(); i++) {
+            for(int j=0; j<carte.getNbColonnes(); j++) {
+                // chemins : liste des cases atteignables
+                LinkedList chemins = new LinkedList<Chemin>();
+                
+                
+                double vitesseRobot = vitesseRobotPattes;
+                Case currentCase = carte.getCase(i, j);
+                switch(currentCase.getNature()){
+                    case EAU:
+                        vitesseRobot = -1;
+                        break;
+                    case ROCHE:
+                        vitesseRobot = 10;
+                        break;   
+                }
+                if(vitesseRobot>0){
+                     // Traitement des Nord / Sud
+                    if(i==0){
+                        // Sur la premiere ligne : Nord impossible
+                        // On ajoute le deplacement Sud
+                        if(testCaseValid(carte, i+1, j)){
+                            chemins.add(new Chemin((i+1)*carte.getNbLignes()+j, vitesseRobot, carte.getTailleCases()));
+                        }
+                    }else if(i==carte.getNbLignes()-1){
+                        // Sur la derniere ligne : Sud impossible
+                        // On ajoute le deplacement Nord
+                        if(testCaseValid(carte, i-1, j)){
+                            chemins.add(new Chemin((i-1)*carte.getNbLignes()+j, vitesseRobot, carte.getTailleCases()));
+                        }
+                    }else{
+                        // On ajoute les deplacements Nord et Sud
+                        if(testCaseValid(carte, i-1, j)){
+                            chemins.add(new Chemin((i-1)*carte.getNbLignes()+j, vitesseRobot, carte.getTailleCases()));
+                        }
+                        if(testCaseValid(carte, i+1, j)){
+                            chemins.add(new Chemin((i+1)*carte.getNbLignes()+j, vitesseRobot, carte.getTailleCases()));
+                        }
+                    }
+                    // Traitement des Est / Ouest
+                    if(j==0){
+                        // Sur la premiere colonne : Ouest impossible
+                        // On ajoute le deplacement Est
+                        if(testCaseValid(carte, i, j+1)){
+                            chemins.add(new Chemin(i*carte.getNbLignes()+j+1, vitesseRobot, carte.getTailleCases()));
+                        }
+                    }else if(j==carte.getNbColonnes()-1){
+                        // Sur la derniere colonne : Est impossible
+                        // On ajoute le deplacement Ouest
+                        if(testCaseValid(carte, i, j-1)){
+                            chemins.add(new Chemin(i*carte.getNbLignes()+j-1, vitesseRobot, carte.getTailleCases()));
+                        }
+                    }else{
+                        // On ajoute les deplacements Est et Ouest
+                        if(testCaseValid(carte, i, j+1)){
+                            chemins.add(new Chemin(i*carte.getNbLignes()+j+1, vitesseRobot, carte.getTailleCases()));
+                        }
+                        if(testCaseValid(carte, i, j-1)){
+                            chemins.add(new Chemin(i*carte.getNbLignes()+j-1, vitesseRobot, carte.getTailleCases()));
+                        }
+                    }
+                    
+                    graphe.put(i*carte.getNbLignes()+j, chemins);
+                }
+            }
+        }
+        return graphe;
+    }
+    
+    private boolean testCaseValid(Carte carte, int i, int j){
+        if(carte.getCase(i, j).getNature()== NatureTerrain.EAU){
+            return false;
+        }
+        return true;
     }
     
 }

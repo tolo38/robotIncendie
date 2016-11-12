@@ -102,21 +102,7 @@ public class DonneesSimulation implements Simulable {
         for (Incendie incendie : incendies) {
             incendie.reset();
         }
-        
-        /*
-         * parcours des evenements pour reset()
-        Set dates = simulateur.getListEvenements().keySet();
-        Iterator itDates = dates.iterator();
-        while (itDates.hasNext()){
-           long date = (long) itDates.next();
-           ArrayList listEventsDate = simulateur.getListEvenements().get(date);
-            for (Iterator it = listEventsDate.iterator(); it.hasNext();) {
-                Evenement event = (Evenement) it.next();
-                event.reset();
-            }
-
-        }
-        */
+      
         
         this.draw();
     }
@@ -129,22 +115,22 @@ public class DonneesSimulation implements Simulable {
             for (int j = 0 ; j < this.carte.getNbLignes() ; j++) {
                 switch (this.carte.getCase(i, j).getNature()) {
                     case EAU :
-                        gui.addGraphicalElement(new Rectangle(i * 50 + 25, j * 50 + 25, Color.CYAN, Color.CYAN, 50));
+                        gui.addGraphicalElement(new Rectangle(j * 50 + 25, i * 50 + 25, Color.CYAN, Color.CYAN, 50));
                         break;
                     case FORET :
-                        gui.addGraphicalElement(new Rectangle(i * 50 + 25, j * 50 + 25, Color.GREEN, Color.GREEN, 50));
+                        gui.addGraphicalElement(new Rectangle(j * 50 + 25, i * 50 + 25, Color.GREEN, Color.GREEN, 50));
                         break;
                     case ROCHE :
-                        gui.addGraphicalElement(new Rectangle(i * 50 + 25, j * 50 + 25, Color.GRAY, Color.GRAY, 50));
+                        gui.addGraphicalElement(new Rectangle(j * 50 + 25, i * 50 + 25, Color.GRAY, Color.GRAY, 50));
                         break;
                     case TERRAIN_LIBRE :
-                        gui.addGraphicalElement(new Rectangle(i * 50 + 25, j * 50 + 25, Color.WHITE, Color.WHITE, 50));
+                        gui.addGraphicalElement(new Rectangle(j * 50 + 25, i * 50 + 25, Color.WHITE, Color.WHITE, 50));
                         break;
                     case HABITAT :
-                        gui.addGraphicalElement(new Rectangle(i * 50 + 25, j * 50 + 25, Color.RED, Color.RED, 50));
+                        gui.addGraphicalElement(new Rectangle(j * 50 + 25, i * 50 + 25, Color.RED, Color.RED, 50));
                         break;
                     case UNSET :
-                        gui.addGraphicalElement(new Rectangle(i * 50 + 25, j * 50 + 25, Color.BLACK, Color.BLACK, 50));
+                        gui.addGraphicalElement(new Rectangle(j * 50 + 25, i * 50 + 25, Color.BLACK, Color.BLACK, 50));
                         break;
                 }
             }
