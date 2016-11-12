@@ -6,6 +6,9 @@ import general.Case;
 import general.Direction;
 import general.DonneesSimulation;
 import general.NatureTerrain;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.ListIterator;
 
 /**
  *
@@ -16,6 +19,38 @@ public class UtileRobot {
 
     static Case caseSuivante(Case position, Direction direction) throws ForbiddenMoveException {
         return dataGame.getCarte().getVoisin(position, direction);
+    }
+
+    public static LinkedList<Direction> numCaseToDirection(LinkedList<Double> doubleList) {
+        LinkedList<Direction> DirList = null;
+        ListIterator<Double> it = doubleList.listIterator();
+        while(it.hasNext()) {
+            double numCase = it.next();
+            if(it.hasNext()) {
+                double numCaseNext = it.next();
+                it.previous();
+                switch ((int)(numCaseNext - numCase)) {
+                    case 1 :
+                        //EST
+                        DirList.addLast(Direction.EST);
+                        break;
+                    case -1 :
+                        //OUEST
+                        DirList.addLast(Direction.OUEST);
+                        break;
+                    default :
+                        if(numCaseNext<numCase){
+                            //Nord
+                            DirList.addLast(Direction.NORD);
+                        }
+                        else{
+                            //SUD
+                            DirList.addLast(Direction.SUD);
+                        }
+                }
+            }
+        }
+        return DirList;
     }
     
     private UtileRobot() {

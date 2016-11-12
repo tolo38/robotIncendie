@@ -58,6 +58,13 @@ public class Carte {
         return tabCases[ligne][colonne]; 
     }
     
+    public Case getCase(int num) {
+        return tabCases[num/nbColonnes][num%nbColonnes]; 
+    }
+    
+    public int getNumCase(Case cases) {
+        return cases.getColonne() + cases.getLigne()*nbColonnes;
+    }
 
 
        /* public boolean voisinExiste(Case src, Direction dir) {

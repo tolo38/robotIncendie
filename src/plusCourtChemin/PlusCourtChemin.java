@@ -67,7 +67,7 @@ public class PlusCourtChemin {
         }
     }
     
-    public void Dijkstra(HashMap<Integer, LinkedList<Chemin>> graphe, int depart) {
+    public double Dijkstra(HashMap<Integer, LinkedList<Chemin>> graphe, int depart, int arrivee) {
         final_couts_sommets = new HashMap<Integer, Sommet>();
         final_couts_sommets.put(depart, new Sommet(depart, 0, -1, true));
         
@@ -108,6 +108,7 @@ public class PlusCourtChemin {
         }
         //DEBUG
         //afficheCoutsSommets(final_couts_sommets);
+        return final_couts_sommets.get(arrivee).getCout();
     }
     
     private int addFinalCouts(HashMap<Integer, Sommet> tmp_couts_sommets){
@@ -134,14 +135,15 @@ public class PlusCourtChemin {
     }
     
     
-    public LinkedList <Integer> getParcours(int depart, int arrive){
-        LinkedList <Integer> listCases = new LinkedList <Integer>();
-        this.Dijkstra(graphe, depart);
+    public LinkedList <Double> getParcours(int depart, int arrive){
+        LinkedList <Double> listCases = new LinkedList <Double>();
+        double cout = this.Dijkstra(graphe, depart, arrive);
         Sommet sommet = final_couts_sommets.get(arrive);
         while(sommet.getParent()!=-1){
-            listCases.addFirst(sommet.getCase());
+            listCases.addFirst((double)sommet.getCase());
             sommet = final_couts_sommets.get(sommet.getParent());
         }
+        listCases.addFirst(cout);
         return listCases;
     }
     
