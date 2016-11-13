@@ -1,0 +1,115 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[french]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[top=0cm,bottom=1cm,right=1cm,left=1cm]{geometry}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+
+\usepackage{enumitem}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% variable à redéfinir (placées sur la page de garde et sur l'entête)
+\def\typedeprojet{Simulation d’une équipe de robots pompiers}
+\def\nomduprojet{TP en temps Libre de Programmation Orientée Objet}
+
+% définition d'une nouvelle dimension (sert pour la page de garde)
+\newlength{\larg}
+\setlength{\larg}{15cm}
+
+% définition des entêtes et pieds de page
+\pagestyle{fancy}
+
+\renewcommand{\headrulewidth}{0.1pt} % épaisseur des barres horizontales de pieds et d'entêtes
+\renewcommand{\footrulewidth}{0.1pt}
+
+\lhead{\includegraphics[height=1.2cm]{logo_ensimag.jpg}} % entête
+\chead{\bf \typedeprojet}
+\rhead{\nomduprojet}
+
+\lfoot{\LaTeX} % pied de page
+\cfoot{}
+\rfoot{\thepage}
+
+ % compte à partir de 0 => la 2e page est donc à 1
+\setcounter{page}{0}
+
+% re-définition des tailles d'entête et de texte
+\setlength{\headheight}{90pt}
+\setlength{\textheight}{710pt}
+
+% renommage de la table des matières
+
+% titre de la page de garde
+\title{
+	\begin{flushleft}
+		\includegraphics[scale=0.25]{logo_ensimag.jpg} \\[40pt]
+	\end{flushleft} 
+	{\rule{\larg}{1mm}}\vspace{7mm}
+	\begin{tabular}{p{4cm} r}
+	& {\Huge {\bf \typedeprojet}} \\[20pt]
+		& {\huge \nomduprojet}
+	\end{tabular}\\
+		\vspace{5mm}
+	{\rule{\larg}{1mm}}
+	\vspace{2mm} \\
+		\begin{tabular}{p{11cm} r}
+	& {\large Novembre 2016} \\[40pt]
+	\end{tabular}\\
+	 table des matières
+	\renewcommand{\contentsname}{\huge \it Sommaire \hfill} % renommage de la table
+	\setcounter{tocdepth}{1} % numérote les sections (2 si on veut voir les sous-sections)
+	\tableofcontents
+	\vfill}
+
+% auteurs de la page de garde
+\author{\begin{tabular}{p{13.7cm}}
+	{\Large Mathieu Leca \& Alexiane Moreau \& Thomas Loïodice}
+	\end{tabular} \\
+	\hline }
+
+% pas de date, elle est dans le titre
+\date{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+\maketitle
+\thispagestyle{empty} % pas de numérotation de la page de garde
+\newpage
+
+\section{Structure de notre code}
+
+	\subsection{Nos fichiers}
+
+\begin{itemize}[label=\textbullet]
+	\item \verb|src/| : repertoir contenant les sources
+\end{itemize}
+
+	\subsection{Nos choix de collection}
+arrayList / LinkedList ...
+
+	\subsection{Nos choix d'implementation}
+Utile robot \\
+ordreChefPompier
+
+	\subsection{Nos choix d'optimisation}
+Plus court chemin : dijkstra \\
+...
+
+
+\section{Nos fichiers de tests}
+
+	\subsection{Les Testes Proposée}
+
+	\subsection{Comment compiler}
+
+\section{Conclusion}
+
+
+\end{document}
+
+
