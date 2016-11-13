@@ -200,19 +200,19 @@ public class DonneesSimulation implements Simulable {
             switch (robot.getType()) {
                 case "DRONE" :
                     //gui.addGraphicalElement(new Oval(robot.getPosition().getColonne() * 50 + 35, robot.getPosition().getLigne() * 50 + 25, Color.BLUE, Color.MAGENTA, 20));
-                    gui.addGraphicalElement(new ImageElement(j * 50 , i * 50 , RES+"drone.png", 50, 50, pan));
+                    gui.addGraphicalElement(new ImageElement(j * 50 +5 , i * 50 +5 , RES+"drone.png", 25, 25, pan));
                     break;
                 case "ROUES" :
                     //gui.addGraphicalElement(new Oval(robot.getPosition().getColonne() * 50 + 35, robot.getPosition().getLigne() * 50 + 25, Color.WHITE, Color.MAGENTA, 20));
-                    gui.addGraphicalElement(new ImageElement(j * 50 , i * 50 , RES+"roue.png", 50, 50, pan));
+                    gui.addGraphicalElement(new ImageElement(j * 50 +20, i * 50 +5 , RES+"roue.png", 25, 25, pan));
                     break;
                 case "PATTES" :
                     //gui.addGraphicalElement(new Oval(robot.getPosition().getColonne() * 50 + 35, robot.getPosition().getLigne() * 50 + 25, Color.BLACK, Color.MAGENTA, 20));
-                    gui.addGraphicalElement(new ImageElement(j * 50 , i * 50 , RES+"robotpatte.png", 50, 50, pan));
+                    gui.addGraphicalElement(new ImageElement(j * 50 +5, i * 50 +20 , RES+"robotpatte.png", 25, 25, pan));
                     break;
                 case "CHENILLES" :
                     //gui.addGraphicalElement(new Oval(robot.getPosition().getColonne() * 50 + 35, robot.getPosition().getLigne() * 50 + 25, Color.GREEN, Color.MAGENTA, 20));
-                    gui.addGraphicalElement(new ImageElement(j * 50 , i * 50 , RES+"chenille.png", 50, 50, pan));
+                    gui.addGraphicalElement(new ImageElement(j * 50 +20, i * 50 +20, RES+"chenille.png", 25, 25, pan));
                     break;
             }
         }        
