@@ -16,6 +16,7 @@ import gui.ImageElement;
 import gui.Oval;
 import gui.Rectangle;
 import gui.Simulable;
+import java.awt.Container;
 import java.util.LinkedList;
 import javax.swing.JPanel;
 
@@ -140,31 +141,32 @@ public class DonneesSimulation implements Simulable {
         // affichage de la carte case par case
         int nbCol = this.carte.getNbColonnes();
         int nbLig = this.carte.getNbLignes();
-        JPanel[][] tabdraw = new JPanel[nbLig][nbCol];
+        //JPanel[][] pan = new JPanel[nbLig][nbCol];
+        Container pan = gui.getContentPane();
         for (int i = 0 ; i < nbCol ; i++) {
             for (int j = 0 ; j < nbLig ; j++) {
-                tabdraw[i][j] = new JPanel();
-                gui.addGraphicalElement(new ImageElement(j * 50 , i * 50 , RES+"sol.jpg", 50, 50, tabdraw[i][j]));
+                //tabdraw[i][j] = new JPanel();
+                gui.addGraphicalElement(new ImageElement(j * 50 , i * 50 , RES+"sol.jpg", 50, 50, pan));
                 switch (this.carte.getCase(i, j).getNature()) {
                     case EAU :
                         //gui.addGraphicalElement(new Rectangle(j * 50 + 25, i * 50 + 25, Color.CYAN, Color.CYAN, 50));
-                        gui.addGraphicalElement(new ImageElement(j * 50 , i * 50 ,RES+"eau.jpg" , 50, 50,tabdraw[i][j]));
+                        gui.addGraphicalElement(new ImageElement(j * 50 , i * 50 ,RES+"eau.jpg" , 50, 50,pan));
                         break;
                     case FORET :
                         //gui.addGraphicalElement(new Rectangle(j * 50 + 25, i * 50 + 25, Color.GREEN, Color.GREEN, 50));
-                        gui.addGraphicalElement(new ImageElement(j * 50 , i * 50 , RES+"foret.png", 50, 50, tabdraw[i][j]));
+                        gui.addGraphicalElement(new ImageElement(j * 50 , i * 50 , RES+"foret.png", 50, 50, pan));
                         break;
                     case ROCHE :
                         //gui.addGraphicalElement(new Rectangle(j * 50 + 25, i * 50 + 25, Color.GRAY, Color.GRAY, 50));
-                        gui.addGraphicalElement(new ImageElement(j * 50 , i * 50 , RES+"rocher.png", 50, 50, tabdraw[i][j]));
+                        gui.addGraphicalElement(new ImageElement(j * 50 , i * 50 , RES+"rocher.png", 50, 50, pan));
                         break;
                     case TERRAIN_LIBRE :
                         //gui.addGraphicalElement(new Rectangle(j * 50 + 25, i * 50 + 25, Color.WHITE, Color.WHITE, 50));
-                        gui.addGraphicalElement(new ImageElement(j * 50 , i * 50 , RES+"sol.jpg", 50, 50, tabdraw[i][j]));
+                        gui.addGraphicalElement(new ImageElement(j * 50 , i * 50 , RES+"sol.jpg", 50, 50, pan));
                         break;
                     case HABITAT :
                         //gui.addGraphicalElement(new Rectangle(j * 50 + 25, i * 50 + 25, Color.RED, Color.RED, 50));
-                        gui.addGraphicalElement(new ImageElement(j * 50 , i * 50 , RES+"maisons.png", 50, 50, tabdraw[i][j]));
+                        gui.addGraphicalElement(new ImageElement(j * 50 , i * 50 , RES+"maisons.png", 50, 50, pan));
                         break;
                     case UNSET :
                         gui.addGraphicalElement(new Rectangle(j * 50 + 25, i * 50 + 25, Color.RED, Color.RED, 50));
@@ -178,16 +180,16 @@ public class DonneesSimulation implements Simulable {
             // System.out.println(robot.getTailleReservoir());
             int i = incendie.getLigne();
             int j = incendie.getColonne();
-            gui.addGraphicalElement(new ImageElement(j * 50 , i * 50 , RES+"0feu.png", 50, 50, tabdraw[i][j]));
+            gui.addGraphicalElement(new ImageElement(j * 50 , i * 50 , RES+"0feu.png", 50, 50, pan));
             if(incendie.eteint()) {
-                gui.addGraphicalElement(new ImageElement(j * 50 , i * 50 , RES+"0feu.png", 50, 50, tabdraw[i][j]));
+                gui.addGraphicalElement(new ImageElement(j * 50 , i * 50 , RES+"0feu.png", 50, 50, pan));
             } else if(incendie.getEauNecessaire() <= 10000) {
                 //gui.addGraphicalElement(new Oval(incendie.getColonne() * 50 + 15, incendie.getLigne() * 50 + 25, Color.orange, Color.orange, 20));
-                gui.addGraphicalElement(new ImageElement(j * 50 , i * 50 , RES+"1feu.png", 50, 50, tabdraw[i][j]));
+                gui.addGraphicalElement(new ImageElement(j * 50 , i * 50 , RES+"1feu.png", 50, 50, pan));
             } else if(incendie.getEauNecessaire() <= 40000) {
-                gui.addGraphicalElement(new ImageElement(j * 50 , i * 50 , RES+"2feu.png", 50, 50, tabdraw[i][j]));
+                gui.addGraphicalElement(new ImageElement(j * 50 , i * 50 , RES+"2feu.png", 50, 50, pan));
             } else {
-                gui.addGraphicalElement(new ImageElement(j * 50 , i * 50 , RES+"3feu.png", 50, 50, tabdraw[i][j]));
+                gui.addGraphicalElement(new ImageElement(j * 50 , i * 50 , RES+"3feu.png", 50, 50, pan));
             }
         }
         
@@ -198,19 +200,19 @@ public class DonneesSimulation implements Simulable {
             switch (robot.getType()) {
                 case "DRONE" :
                     //gui.addGraphicalElement(new Oval(robot.getPosition().getColonne() * 50 + 35, robot.getPosition().getLigne() * 50 + 25, Color.BLUE, Color.MAGENTA, 20));
-                    gui.addGraphicalElement(new ImageElement(j * 50 , i * 50 , RES+"drone.png", 50, 50, tabdraw[i][j]));
+                    gui.addGraphicalElement(new ImageElement(j * 50 , i * 50 , RES+"drone.png", 50, 50, pan));
                     break;
                 case "ROUES" :
                     //gui.addGraphicalElement(new Oval(robot.getPosition().getColonne() * 50 + 35, robot.getPosition().getLigne() * 50 + 25, Color.WHITE, Color.MAGENTA, 20));
-                    gui.addGraphicalElement(new ImageElement(j * 50 , i * 50 , RES+"roue.png", 50, 50, tabdraw[i][j]));
+                    gui.addGraphicalElement(new ImageElement(j * 50 , i * 50 , RES+"roue.png", 50, 50, pan));
                     break;
                 case "PATTES" :
                     //gui.addGraphicalElement(new Oval(robot.getPosition().getColonne() * 50 + 35, robot.getPosition().getLigne() * 50 + 25, Color.BLACK, Color.MAGENTA, 20));
-                    gui.addGraphicalElement(new ImageElement(j * 50 , i * 50 , RES+"robotpatte.png", 50, 50, tabdraw[i][j]));
+                    gui.addGraphicalElement(new ImageElement(j * 50 , i * 50 , RES+"robotpatte.png", 50, 50, pan));
                     break;
                 case "CHENILLES" :
                     //gui.addGraphicalElement(new Oval(robot.getPosition().getColonne() * 50 + 35, robot.getPosition().getLigne() * 50 + 25, Color.GREEN, Color.MAGENTA, 20));
-                    gui.addGraphicalElement(new ImageElement(j * 50 , i * 50 , RES+"chenille.png", 50, 50, tabdraw[i][j]));
+                    gui.addGraphicalElement(new ImageElement(j * 50 , i * 50 , RES+"chenille.png", 50, 50, pan));
                     break;
             }
         }        
