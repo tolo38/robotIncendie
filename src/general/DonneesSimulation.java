@@ -178,12 +178,13 @@ public class DonneesSimulation implements Simulable {
             // System.out.println(robot.getTailleReservoir());
             int i = incendie.getLigne();
             int j = incendie.getColonne();
+            gui.addGraphicalElement(new ImageElement(j * 50 , i * 50 , RES+"0feu.png", 50, 50, tabdraw[i][j]));
             if(incendie.eteint()) {
                 gui.addGraphicalElement(new ImageElement(j * 50 , i * 50 , RES+"0feu.png", 50, 50, tabdraw[i][j]));
             } else if(incendie.getEauNecessaire() <= 10000) {
                 //gui.addGraphicalElement(new Oval(incendie.getColonne() * 50 + 15, incendie.getLigne() * 50 + 25, Color.orange, Color.orange, 20));
                 gui.addGraphicalElement(new ImageElement(j * 50 , i * 50 , RES+"1feu.png", 50, 50, tabdraw[i][j]));
-            } else if(incendie.getEauNecessaire() <= 50000) {
+            } else if(incendie.getEauNecessaire() <= 40000) {
                 gui.addGraphicalElement(new ImageElement(j * 50 , i * 50 , RES+"2feu.png", 50, 50, tabdraw[i][j]));
             } else {
                 gui.addGraphicalElement(new ImageElement(j * 50 , i * 50 , RES+"3feu.png", 50, 50, tabdraw[i][j]));
